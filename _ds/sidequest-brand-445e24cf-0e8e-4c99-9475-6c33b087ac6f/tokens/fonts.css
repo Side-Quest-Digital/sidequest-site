@@ -1,0 +1,18 @@
+/* sideQUEST — Font loading + families
+
+   THE RULE: one family. Space Grotesk does everything — wordmark, headings,
+   body, UI, buttons. There is no second brand face. If a surface feels like it
+   needs one, it needs better hierarchy instead.
+
+   Space Mono is the only exception: data labels, spec annotations, version
+   strings, code. Same superfamily, so it never reads as a foreign font.
+
+   Fallbacks: Space Grotesk -> Inter -> system-ui. */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body:    'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-mono:    'Space Mono', ui-monospace, 'SF Mono', monospace;
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sideQUESTdigital — small apps, absurdly well made</title>
+<meta name="description" content="sideQUESTdigital is a remote studio shipping small, native mobile apps. Three live, more in the forge. Found a bug? A human reads every report.">
+<meta name="theme-color" content="#0F172A">
+<meta name="color-scheme" content="dark">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="sideQUESTdigital — small apps, absurdly well made">
+<meta property="og:description" content="A remote studio shipping small, native mobile apps. Three live, more in the forge.">
+<meta property="og:image" content="assets/sidequest-lockup-tagline.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="assets/sidequest-icon-night.png">
+<link rel="apple-touch-icon" href="assets/sidequest-icon-night.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="_ds/sidequest-brand-445e24cf-0e8e-4c99-9475-6c33b087ac6f/styles.css">
+<link rel="stylesheet" href="site.css">
+</head>
+
+<body class="sq-field sq-field--fixed">
+
+  <a class="site-skip" href="#main">Skip to content</a>
+
+  <!-- ============ THE STAGE RAIL — signature device (§1, §6.1) ============ -->
+  <div class="site-rail" aria-hidden="true">
+    <span class="site-rail__line"></span>
+    <span class="site-rail__seg" data-rail-seg></span>
+    <span class="site-rail__word" data-rail-word="play">Play</span>
+    <span class="site-rail__word" data-rail-word="build">Build</span>
+    <span class="site-rail__word" data-rail-word="launch">Launch</span>
+  </div>
+
+  <!-- ============ HEADER (§6.2) — always violet-ambient ============ -->
+  <header class="site-header sq-stage-play" data-header>
+    <div class="site-container site-header__inner">
+
+      <a class="site-header__brand" href="#/" aria-label="sideQUESTdigital — home">
+        <img src="assets/sidequest-mark.png" alt="" width="34" height="34" class="site-header__mark">
+        <span class="sq-wordmark" style="--wordmark-size:21px">
+          <span class="sq-wordmark__side">side</span><span
+                class="sq-wordmark__quest"><span class="sq-wordmark__q">Q</span>UEST</span>
+        </span>
+        <span class="sq-mono site-header__suffix">digital</span>
+      </a>
+
+      <button class="site-navtoggle" data-navtoggle aria-expanded="false" aria-controls="site-nav"
+              aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-nav aria-label="Primary">
+        <a class="site-nav__link" href="#/">Studio</a>
+        <a class="site-nav__link" href="#/apps">Apps</a>
+        <a class="site-nav__link" href="#/team">Team</a>
+        <button class="sq-btn sq-btn--sm sq-btn--secondary site-nav__cta" data-support-open>
+          Report a bug
+        </button>
+      </nav>
+
+    </div>
+    <span class="site-progress" data-progress aria-hidden="true"></span>
+  </header>
+
+  <!-- ============ VIEW ROOT ============ -->
+  <main id="main" data-view tabindex="-1"></main>
+
+  <!-- ============ FOOTER (§6.20) — always violet-ambient ============ -->
+  <footer class="site-footer sq-stage-play">
+    <div class="site-container">
+
+      <div class="site-footer__band">
+        <div class="site-footer__brandcol">
+          <span class="sq-wordmark" style="--wordmark-size:26px">
+            <span class="sq-wordmark__side">side</span><span
+                  class="sq-wordmark__quest"><span class="sq-wordmark__q">Q</span>UEST</span>
+          </span>
+          <p class="sq-tagline site-footer__tagline">
+            <span class="sq-tagline__play">Play.</span>
+            <span class="sq-tagline__build">Build.</span>
+            <span class="sq-tagline__launch">Launch.</span>
+          </p>
+          <p class="sq-body-sm site-footer__blurb">
+            A remote studio. Three apps live, more in the forge.
+          </p>
+        </div>
+
+        <div class="site-footer__col">
+          <p class="sq-mono site-footer__coltitle">Apps</p>
+          <a class="site-footer__link" href="#/apps/plantswap">Plantswap</a>
+          <a class="site-footer__link" href="#/apps/vibecheck">Vibecheck</a>
+          <a class="site-footer__link" href="#/apps/reverse-audit">Reverse Audit</a>
+        </div>
+
+        <div class="site-footer__col">
+          <p class="sq-mono site-footer__coltitle">Studio</p>
+          <a class="site-footer__link" href="#/">Studio</a>
+          <a class="site-footer__link" href="#/team">Team</a>
+          <a class="site-footer__link" href="#/apps">All apps</a>
+        </div>
+
+        <div class="site-footer__col">
+          <p class="sq-mono site-footer__coltitle">Say hello</p>
+          <button class="site-footer__link site-footer__link--btn" data-support-open>Report a bug</button>
+          <button class="site-footer__link site-footer__link--btn" data-support-open data-kind="Question">
+            Ask a question
+          </button>
+          <button class="site-footer__link site-footer__link--btn" data-support-open data-kind="Feature idea">
+            Suggest something
+          </button>
+        </div>
+      </div>
+
+      <hr class="site-footer__rule">
+
+      <div class="site-footer__legal">
+        <p class="sq-mono">© 2025–2026 sideQUESTdigital · Remote</p>
+        <p class="sq-mono site-footer__note">Screenshots, names and photos on this site are placeholders.</p>
+      </div>
+    </div>
+
+    <div class="site-footer__giant" aria-hidden="true">
+      side<span class="site-footer__giantq">Q</span>UEST
+    </div>
+  </footer>
+
+  <!-- ============ SUPPORT SLIDE-OVER (§6.19) ============ -->
+  <div class="site-scrim" data-scrim hidden></div>
+
+  <aside class="site-support" data-support hidden
+         role="dialog" aria-modal="true" aria-labelledby="support-title">
+
+    <div class="site-support__head">
+      <div>
+        <p class="sq-eyebrow">Support</p>
+        <h2 class="sq-h1 site-support__title" id="support-title" tabindex="-1">Tell us what's up</h2>
+      </div>
+      <button class="site-support__close" data-support-close aria-label="Close">&#10005;</button>
+    </div>
+
+    <!-- FORM -->
+    <form class="site-support__body" data-support-form novalidate>
+
+      <div class="site-support__errors" data-error-summary role="status" aria-live="polite" hidden></div>
+
+      <fieldset class="site-field">
+        <legend class="sq-mono site-field__label">What is it?</legend>
+        <div class="site-kinds" role="radiogroup" aria-label="What is it?" data-kinds></div>
+      </fieldset>
+
+      <div class="site-field">
+        <label class="sq-mono site-field__label" for="support-app">Which app?</label>
+        <div class="site-selectwrap">
+          <select id="support-app" name="app" data-field-app>
+            <option value="general">Not app-specific / the studio</option>
+            <option value="plantswap">Plantswap</option>
+            <option value="vibecheck">Vibecheck</option>
+            <option value="reverse-audit">Reverse Audit</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="site-field">
+        <label class="sq-mono site-field__label" for="support-email">
+          Your email <span class="site-field__req">Required</span>
+        </label>
+        <input id="support-email" name="email" type="email" required
+               autocomplete="email" inputmode="email" placeholder="you@example.com"
+               aria-describedby="support-email-help">
+        <p class="sq-caption site-field__help" id="support-email-help">
+          So we can reply. Nothing else, ever.
+        </p>
+        <p class="site-field__error" id="support-email-error" hidden></p>
+      </div>
+
+      <div class="site-field">
+        <label class="sq-mono site-field__label" for="support-message">
+          What happened? <span class="site-field__req">Required</span>
+        </label>
+        <textarea id="support-message" name="message" rows="6" required maxlength="1000"
+                  placeholder="What you did, what you expected, what you got instead. Device and app version help."
+                  aria-describedby="support-message-help"></textarea>
+        <div class="site-field__foot">
+          <p class="sq-caption site-field__help" id="support-message-help">Up to 1000 characters.</p>
+          <p class="site-mono-xs site-count" data-count aria-live="off">0 / 1000</p>
+        </div>
+        <p class="site-field__error" id="support-message-error" hidden></p>
+      </div>
+
+      <div class="site-check">
+        <input type="checkbox" id="support-diag" name="diagnostics" checked>
+        <label for="support-diag">
+          <span class="sq-body-sm">Attach anonymous diagnostics</span>
+          <span class="sq-caption">App version, device model, OS. No personal data.</span>
+        </label>
+      </div>
+
+      <button type="submit" class="sq-btn sq-btn--md sq-btn--primary site-support__submit" data-submit>
+        Send it
+      </button>
+    </form>
+
+    <!-- SUCCESS -->
+    <div class="site-support__done" data-support-done hidden>
+      <div class="site-tick" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.5 5.5L20 7"/></svg>
+      </div>
+      <h3 class="sq-h4 site-support__donetitle" data-done-title tabindex="-1">Message away.</h3>
+      <p class="sq-body" data-done-body></p>
+      <p class="sq-mono" data-done-ref></p>
+      <div class="site-support__doneactions">
+        <button class="sq-btn sq-btn--md sq-btn--ghost" data-support-again>Send another</button>
+        <button class="sq-btn sq-btn--md sq-btn--secondary" data-support-close>Close</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="site-announce" role="status" aria-live="polite" data-announce></div>
+
+  <script src="site.js"></script>
+</body>
+</html>

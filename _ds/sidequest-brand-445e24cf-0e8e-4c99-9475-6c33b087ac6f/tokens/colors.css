@@ -1,0 +1,155 @@
+/* sideQUEST — Colour palette
+
+   THE STRUCTURE: one brand colour, three stage accents, one dark field.
+
+   Violet #7C3AED is the brand. It owns the mark, the wordmark's Q, and the
+   sword. Lime and cyan are NOT co-equal brands — they are stage accents,
+   earned from the tagline:
+
+       Play.  -> violet   (the idea, the mark, the default)
+       Build. -> lime     (making, progress, in-flight work)
+       Launch.-> cyan     (shipping, live, done)
+
+   Pick ONE accent per surface, chosen by what the surface is about. All three
+   appear together only in the tagline lockup or an explicit three-stage row.
+   A page that uses all three everywhere has no accent at all.
+
+   The ramps are Tailwind violet / lime / cyan / slate. That is deliberate —
+   the five hexes in the source artwork are exact Tailwind values, so the
+   in-between steps are the ones the artwork implies rather than ones invented
+   here. */
+
+:root {
+  /* ---- Canvas ---- */
+  --sq-void:         #020617;  /* deepest — app icon tile, full-bleed hero */
+  --sq-night:        #0F172A;  /* PRIMARY DARK CANVAS — the default surface */
+  --sq-slate-800:    #1E293B;  /* raised panel, card fill */
+  --sq-slate-700:    #334155;  /* divider on dark, disabled chrome */
+
+  /* ---- Violet — THE BRAND ---- */
+  --sq-violet-900:   #4C1D95;
+  --sq-violet-800:   #5B21B6;
+  --sq-violet-700:   #6D28D9;  /* pressed / gradient start */
+  --sq-violet-600:   #7C3AED;  /* PRIMARY BRAND VIOLET */
+  --sq-violet-500:   #8B5CF6;  /* hover, glow core */
+  --sq-violet-400:   #A78BFA;  /* violet text on dark, links */
+
+  /* ---- Lime — the BUILD accent ---- */
+  --sq-lime-600:     #65A30D;
+  --sq-lime-500:     #84CC16;
+  --sq-lime-400:     #A3E635;  /* PRIMARY LIME */
+  --sq-lime-300:     #BEF264;
+
+  /* ---- Cyan — the LAUNCH accent ---- */
+  --sq-cyan-600:     #0891B2;
+  --sq-cyan-500:     #06B6D4;
+  --sq-cyan-400:     #22D3EE;  /* PRIMARY CYAN */
+  --sq-cyan-300:     #67E8F9;
+
+  /* ---- Light theme ---- */
+  --sq-white:        #FFFFFF;
+  --sq-paper:        #F8FAFC;  /* LIGHT SURFACE — spec sheets, docs, print */
+  --sq-paper-200:    #E2E8F0;  /* light divider */
+  --sq-ink:          #0F172A;  /* ALL text on light backgrounds */
+
+  /* ---- Text on dark ---- */
+  --sq-text-100:     #F8FAFC;  /* primary */
+  --sq-text-200:     #E2E8F0;
+  --sq-text-300:     #CBD5E1;  /* secondary */
+  --sq-text-400:     #94A3B8;  /* meta, captions, mono labels */
+  --sq-text-500:     #64748B;  /* disabled */
+
+  /* ---- Status — DATA ONLY. Never decorative, never brand. ----
+     Success is EMERALD, not lime. Lime is a brand accent; if it also means
+     "pass" then every lime element reads as a status and the brand accent
+     stops working. Keep the two apart. */
+  --sq-ok:           #10B981;
+  --sq-warn:         #F59E0B;
+  --sq-bad:          #EF4444;
+  --sq-critical:     #B91C1C;
+
+  /* ---- Glass / translucent surfaces ---- */
+  --sq-panel:        rgba(248, 250, 252, 0.04);
+  --sq-panel-hi:     rgba(248, 250, 252, 0.08);
+  --sq-border:       rgba(248, 250, 252, 0.10);
+  --sq-border-hi:    rgba(248, 250, 252, 0.22);
+  --sq-hairline:     rgba(248, 250, 252, 0.06);
+
+  /* ---- Semantic aliases — prefer these in components ---- */
+  --surface-base:    var(--sq-night);
+  --surface-deep:    var(--sq-void);
+  --surface-raised:  var(--sq-slate-800);
+  --surface-card:    var(--sq-panel);
+  --surface-card-hi: var(--sq-panel-hi);
+  --surface-light:   var(--sq-paper);
+
+  --border-subtle:   var(--sq-border);
+  --border-strong:   var(--sq-border-hi);
+  --border-on-light: rgba(15, 23, 42, 0.12);
+
+  --text-primary:    var(--sq-text-100);
+  --text-secondary:  var(--sq-text-300);
+  --text-tertiary:   var(--sq-text-400);
+  --text-on-light:   var(--sq-ink);
+
+  --brand:           var(--sq-violet-600);
+  --brand-deep:      var(--sq-violet-700);
+  --brand-light:     var(--sq-violet-400);
+
+  /* ---- Stage accent switch ----
+     Default is violet. Set `class="sq-stage-build"` or `"sq-stage-launch"` on
+     a wrapper and every accent-aware component below re-tints in one move. */
+  --accent:          var(--sq-violet-600);
+  --accent-hi:       var(--sq-violet-500);
+  --accent-text:     var(--sq-violet-400);
+  --accent-glow:     rgba(124, 58, 237, 0.45);
+  --accent-on:       var(--sq-white);   /* text colour ON the accent fill */
+
+  --focus-ring:      var(--sq-violet-400);
+
+  /* ---- Fixed gradients ----
+     The launch gradient runs violet -> cyan at 135deg, matching the sword's
+     fall. Never reverse it.
+
+     --grad-launch-flat is the same two stops read LEFT TO RIGHT. That is how
+     the brand sheet renders the Play/Build/Launch panel, and it is correct
+     there for a specific reason: on that panel the gradient is a SEQUENCE
+     (play at the left, launch at the right), not a light source. Use the
+     135deg version everywhere the gradient is decoration. */
+  --grad-launch:      linear-gradient(135deg, var(--sq-violet-600) 0%, var(--sq-cyan-400) 100%);
+  --grad-launch-flat: linear-gradient(90deg, var(--sq-violet-600) 0%, var(--sq-cyan-400) 100%);
+
+  /* The mark's own gradient — night store icon ONLY. Light source upper-left,
+     matching the app icon on the brand sheet. Everywhere else the mark is
+     flat. See components/brand/Mark.prompt.md. */
+  --grad-mark:       linear-gradient(135deg, var(--sq-violet-400) 0%, var(--sq-violet-700) 100%);
+  --grad-build:      linear-gradient(135deg, var(--sq-violet-600) 0%, var(--sq-lime-400) 100%);
+  --grad-quest:      linear-gradient(90deg, var(--sq-violet-600) 0%, var(--sq-lime-400) 50%, var(--sq-cyan-400) 100%);
+  --grad-night:      linear-gradient(160deg, var(--sq-night) 0%, var(--sq-void) 100%);
+}
+
+/* ---- Stage scopes ---- */
+
+.sq-stage-play {
+  --accent:      var(--sq-violet-600);
+  --accent-hi:   var(--sq-violet-500);
+  --accent-text: var(--sq-violet-400);
+  --accent-glow: rgba(124, 58, 237, 0.45);
+  --accent-on:   var(--sq-white);
+}
+
+.sq-stage-build {
+  --accent:      var(--sq-lime-400);
+  --accent-hi:   var(--sq-lime-300);
+  --accent-text: var(--sq-lime-400);
+  --accent-glow: rgba(163, 230, 53, 0.40);
+  --accent-on:   var(--sq-ink);   /* lime is bright — dark text on it, always */
+}
+
+.sq-stage-launch {
+  --accent:      var(--sq-cyan-400);
+  --accent-hi:   var(--sq-cyan-300);
+  --accent-text: var(--sq-cyan-400);
+  --accent-glow: rgba(34, 211, 238, 0.40);
+  --accent-on:   var(--sq-ink);   /* cyan is bright — dark text on it, always */
+}

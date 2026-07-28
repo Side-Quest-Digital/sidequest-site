@@ -1,0 +1,186 @@
+/* sideQUEST — Effects: the field, the slash, the cut, glass, glow
+
+   Two brand devices, both derived from the mark rather than bolted on:
+
+   THE SLASH — the sword in the Q runs top-left to bottom-right. Every
+   diagonal in the system runs at that same 135deg. A diagonal at any other
+   angle is off-brand, and a diagonal running the other way (45deg) reads as
+   the sword reversed, which is the one thing the mark must never do.
+
+   THE CUT — a 45deg corner notch on panels. Same edge, applied to geometry.
+
+   Both are OPTIONAL per surface. The field is not: every dark sideQUEST
+   surface sits on it. */
+
+:root {
+  --shadow-panel: 0 4px 24px rgba(2, 6, 23, 0.45);
+  --shadow-lift:  0 18px 50px rgba(2, 6, 23, 0.65);
+  --shadow-icon:  0 12px 32px rgba(2, 6, 23, 0.55);
+  --glow-accent:  0 0 48px var(--accent-glow);
+  --glow-tight:   0 0 20px var(--accent-glow);
+
+  --blur-bloom: 90px;
+  --blur-glass: 18px;
+
+  --ease:      cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-snap: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --dur-fast:  130ms;
+  --dur-base:  210ms;
+  --dur-slow:  400ms;
+}
+
+/* ============================================================
+   THE FIELD — the default sideQUEST canvas.
+   Dark slate base + ONE accent bloom, upper-left. Deliberately one, not two:
+   a single light source keeps the surface reading as a workspace rather than
+   a poster. The bloom takes the active stage accent automatically.
+   ============================================================ */
+
+.sq-field {
+  position: relative;
+  background: var(--grad-night);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.sq-field::before {
+  content: "";
+  position: absolute;
+  top: -22%;
+  left: -14%;
+  width: 66%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 66%);
+  filter: blur(var(--blur-bloom));
+  opacity: 0.34;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Fixed variant for full-page web backgrounds. */
+.sq-field--fixed::before { position: fixed; width: 70vw; }
+
+/* Grid overlay — the "build" texture. Faint enough to be felt, not read.
+   Use on workspace-flavoured surfaces (dashboards, docs, spec sheets).
+   Do NOT use behind photography or the app icon. */
+.sq-field--grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(to right, var(--sq-hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--sq-hairline) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 78%);
+          mask: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 78%);
+}
+
+/* Light field — paper, never stark white, no bloom. */
+.sq-field--light {
+  background: linear-gradient(160deg, var(--sq-white) 0%, var(--sq-paper) 100%);
+}
+.sq-field--light::before { display: none; }
+
+/* ============================================================
+   THE SLASH — a 135deg blade of light across a surface.
+   One per surface, maximum. It is the sword, abstracted; two of them read as
+   scratches.
+   ============================================================ */
+
+.sq-slash {
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: var(--slash-x, 62%);
+  width: var(--slash-w, 2px);
+  transform: rotate(45deg);   /* renders as a 135deg fall: top-left -> bottom-right */
+  transform-origin: center;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--accent) 45%,
+    var(--accent) 55%,
+    transparent 100%
+  );
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Wide soft variant — a light wash rather than a line. */
+.sq-slash--beam {
+  --slash-w: 180px;
+  opacity: 0.14;
+  filter: blur(40px);
+}
+
+/* ============================================================
+   THE CUT — 45deg corner notch. Same blade, applied to geometry.
+   Use on ONE panel per view, not as a house style for all cards.
+   ============================================================ */
+
+.sq-cut-tr { clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%); }
+.sq-cut-bl { clip-path: polygon(0 0, 100% 0, 100% 100%, 28px 100%, 0 calc(100% - 28px)); }
+
+/* ============================================================
+   SQUIRCLE — the app-icon shape, reusable at any size.
+   Radius is a PERCENTAGE so it stays proportional. See spacing.css.
+   ============================================================ */
+
+.sq-squircle {
+  border-radius: var(--icon-radius-pct);
+  overflow: hidden;
+}
+
+/* ============================================================
+   GLASS
+   ============================================================ */
+
+.sq-glass {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+}
+
+.sq-glass--hi {
+  background: var(--surface-card-hi);
+  border-color: var(--border-strong);
+}
+
+/* Solid raised panel — use when content sits on top and glass would muddy it. */
+.sq-solid {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+   GLOW — accent-aware. Applies the ACTIVE stage colour, so a lime surface
+   glows lime without touching the utility.
+   ============================================================ */
+
+.sq-glow      { box-shadow: var(--glow-accent); }
+.sq-glow-text { text-shadow: 0 0 24px var(--accent-glow); }
+
+/* ============================================================
+   PRINT / PDF — stops the dark field printing as white.
+   Include on every exported report or spec sheet.
+   ============================================================ */
+
+@media print {
+  html, body {
+    background: var(--sq-night);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

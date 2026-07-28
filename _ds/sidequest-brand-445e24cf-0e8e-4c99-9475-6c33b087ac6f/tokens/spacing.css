@@ -1,0 +1,47 @@
+/* sideQUEST — Spacing, radius, geometry
+
+   Spacing is a 4px scale. Do not invent intermediate values.
+
+   Radius is soft but not pill-obsessed: the brand's shape language is the
+   SQUIRCLE, taken from the app icon tile. Radius scales with the element —
+   a 20px chip and a 200px tile do not share a literal radius value. */
+
+:root {
+  /* ---- Spacing scale ---- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---- Radius ---- */
+  --radius-sm:   8px;    /* chips, tags, inputs, small badges */
+  --radius-md:   14px;   /* cards, panels, table containers */
+  --radius-lg:   22px;   /* large cards, image containers, device screens */
+  --radius-xl:   28px;   /* hero panels, feature graphics */
+  --radius-pill: 999px;  /* stage pills, badges — NOT the primary button */
+
+  /* ---- App icon squircle ----
+     22.5% of the tile edge. This is a RATIO, not a fixed px: an icon rendered
+     at 1024 uses 230px, at 180 uses 40px. Hard-coding a px value is the
+     fastest way to make the icon look wrong at another size. */
+  --icon-radius-pct: 22.5%;
+
+  /* ---- Layout ---- */
+  --max-content:  1200px;
+  --max-prose:    66ch;
+  --gutter:       var(--space-5);
+  --section-gap:  var(--space-9);
+
+  /* ---- Logo safe space (see guidelines/brand-logo) ---- */
+  --logo-height:  30px;
+  --logo-inset:   var(--space-5);
+
+  /* ---- The sword angle. Every diagonal in the system uses this. ---- */
+  --sword-angle:  135deg;
+}

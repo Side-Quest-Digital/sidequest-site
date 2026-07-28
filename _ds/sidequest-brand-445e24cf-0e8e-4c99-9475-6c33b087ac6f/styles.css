@@ -1,0 +1,62 @@
+/* sideQUEST — Design System entry point
+   Import this one file. It pulls in every token layer in the correct order.
+
+   Order matters: fonts define the family vars that typography consumes,
+   colors define the palette (and the stage-accent switch) that effects and
+   components consume. */
+
+@import url('./tokens/fonts.css');
+@import url('./tokens/colors.css');
+@import url('./tokens/spacing.css');
+@import url('./tokens/typography.css');
+@import url('./tokens/effects.css');
+@import url('./components/components.css');
+
+/* ---- Base reset ---- */
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--surface-base);
+  color: var(--text-primary);
+  font: var(--text-body);
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, video { max-width: 100%; display: block; }
+
+a {
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color var(--dur-base) var(--ease);
+}
+a:hover { color: var(--text-primary); }
+
+button, input, textarea, select { font-family: inherit; }
+button { cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--space-6) 0;
+}
+
+code, kbd, pre { font-family: var(--font-mono); font-size: 0.92em; }
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-on);
+}
