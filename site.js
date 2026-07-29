@@ -20,80 +20,84 @@
 
   var APPS = [
     {
-      id: 'plantswap', name: 'Plantswap', initial: 'P', stage: 'build',
-      tagline: 'Trade cuttings with people down the road instead of letting them root in a jam jar forever.',
-      blurb: 'A local swap board for houseplants. List what you have spare, find what you want, meet somewhere sensible. No shipping, no shop.',
-      platforms: 'iOS · Android', version: '2.4.1', size: '38 MB', age: '12+',
+      id: 'plantswap', name: 'PlantSwap', stage: 'launch', theme: 'app-plantswap',
+      icon: 'assets/apps/plantswap/icon.png',
+      tagline: 'Snap any meal. Get a vegan version, instantly.',
+      blurb: 'Point the camera at any dish \u2014 restaurant plate, takeaway, home-cooked \u2014 and every non-vegan ingredient gets swapped for the best plant-based alternative, with the reasoning shown.',
+      platforms: 'iOS \u00b7 Android', version: '1.0', channel: 'TestFlight', build: 'Store assets ready',
       shots: [
-        { label: 'SCREEN 01', caption: 'Nearby swaps, mapped' },
-        { label: 'SCREEN 02', caption: 'Your shelf' },
-        { label: 'SCREEN 03', caption: 'Swap chat' },
-        { label: 'SCREEN 04', caption: 'Care reminders' }
+        { src: 'screen-1.png', caption: 'Make any meal plant-based' },
+        { src: 'screen-2.png', caption: 'Snap it, swap it' },
+        { src: 'screen-3.png', caption: 'Your recipe library' },
+        { src: 'screen-4.png', caption: 'Vegan spots nearby' },
+        { src: 'screen-5.png', caption: 'Home' }
       ],
       features: [
-        { title: 'Local first', body: 'Everything is filtered by walking, cycling or short-drive distance. Nothing ships.' },
-        { title: 'Your shelf', body: 'Photograph a plant once; it becomes a listing, a care log and a swap record.' },
-        { title: 'Swap chat', body: 'Arrange the handover without giving out a phone number.' }
+        { title: "Snap, don't type", body: 'Point the camera at a plate. No searching, no ingredient lists, no typing a recipe in.' },
+        { title: 'Every swap explained', body: 'Chicken to chickpeas, cream to coconut milk. You see the reasoning, not just the result.' },
+        { title: 'Your library, not ours', body: 'Save what works. Recipes and vegan places near you, kept on your own shelf.' }
       ],
       changes: [
-        { ver: '2.4.1', date: '2026-07-18', head: 'Map pins behave in dense cities', note: 'Fixed the cluster that hid swaps when too many listings shared one street.' },
-        { ver: '2.4.0', date: '2026-07-02', head: 'Care reminders respect your timezone', note: 'They now fire at the hour you actually set, wherever you happen to be.' },
-        { ver: '2.3.2', date: '2026-06-11', head: 'Faster photo upload', note: 'Large photos compress on device before they leave it.' }
+        { ver: '1.0', date: '2026-07-18', head: 'First TestFlight build', note: 'Camera capture, ingredient swapping and the saved-recipe shelf, end to end.' },
+        { ver: '0.9', date: '2026-07-02', head: 'Vegan spots near you', note: 'A map of nearby vegan and vegan-friendly places, powered by OpenStreetMap.' },
+        { ver: '0.8', date: '2026-06-11', head: 'Faster processing', note: 'Photos compress on device before they are sent, which roughly halved the wait.' }
       ],
       issues: [
-        { title: 'Duplicate notifications on Android 15', text: 'Some swap alerts arrive twice within a few seconds.', status: 'review' },
-        { title: 'Cultivar spellings missed in search', text: 'Species search does not match every cultivar variant yet.', status: 'investigating' }
+        { title: 'Busy plates confuse the swap list', text: 'Dishes with more than about eight ingredients sometimes miss one.', status: 'investigating' },
+        { title: 'Map needs a location prompt retry', text: 'Denying location once hides the map until the app is restarted.', status: 'review' }
       ]
     },
     {
-      id: 'vibecheck', name: 'Vibecheck', initial: 'V', stage: 'play',
-      tagline: 'One question a day about how you actually felt. Ten seconds, then it leaves you alone.',
-      blurb: 'A mood tracker that refuses to become homework. One prompt a day, a colour for the answer, and a year view that quietly shows you the pattern.',
-      platforms: 'iOS · Android', version: '1.9.0', size: '22 MB', age: '4+',
+      id: 'vibecheck', name: 'Vibe Check', stage: 'build', theme: 'app-vibecheck',
+      icon: 'assets/apps/vibecheck/icon.png', logo: 'assets/apps/vibecheck/logo.png',
+      tagline: 'Say the line. Sell the feeling. Let the room guess.',
+      blurb: 'A party game about performance. One player holds the phone up, the room says an ordinary line in a secret emotion, and the holder has sixty seconds to work out what the room is doing.',
+      platforms: 'iOS \u00b7 Android', version: '0.9', channel: 'Expo Go', build: 'Playable prototype',
       shots: [
-        { label: 'SCREEN 01', caption: "Today's prompt" },
-        { label: 'SCREEN 02', caption: 'Year in colour' },
-        { label: 'SCREEN 03', caption: 'Streaks, gently' },
-        { label: 'SCREEN 04', caption: 'Export and leave' }
+        { caption: 'Read the room' },
+        { caption: 'Sixty seconds' },
+        { caption: 'The results reel' }
       ],
       features: [
-        { title: 'Ten seconds', body: 'One prompt, one tap. Skip a day and nothing scolds you for it.' },
-        { title: 'Year in colour', body: 'A full year on one screen. Patterns surface without a single chart.' },
-        { title: 'On device', body: 'Entries never leave your phone unless you export them yourself.' }
+        { title: 'Read the room', body: 'Phone to the forehead, screen facing out. Tilt down to score it, tilt up to pass.' },
+        { title: 'Filmed as you play', body: 'The front camera catches the round, so the best bits survive the night.' },
+        { title: 'Packs for every crowd', body: 'Themed decks of lines and emotions, including one that stays behind a PIN.' }
       ],
       changes: [
-        { ver: '1.9.0', date: '2026-07-21', head: 'Widgets, finally', note: 'Home screen widgets on both platforms, in the same colours as your year.' },
-        { ver: '1.8.1', date: '2026-06-30', head: 'Colour picker on small screens', note: 'Fixed the picker clipping on devices under five inches.' },
-        { ver: '1.8.0', date: '2026-06-09', head: 'CSV export', note: 'Take your entries with you whenever you like. No account needed.' }
+        { ver: '0.9', date: '2026-07-21', head: 'Rebranded to Vibe Check', note: 'New mark, new palette, new wordmark throughout. The codename Echo is retired.' },
+        { ver: '0.8', date: '2026-06-30', head: 'The share stage', note: 'A portrait share card with a card ticker synced to the round footage.' },
+        { ver: '0.7', date: '2026-06-09', head: 'Theme packs', note: 'A pack store with a paywall, plus the PIN-gated After Dark deck.' }
       ],
       issues: [
-        { title: 'Year view slows past 400 entries', text: 'Older devices stutter when scrubbing a dense year.', status: 'open' }
+        { title: 'Tilt detection drifts on older phones', text: 'The gyroscope needs a re-centre if the round runs long.', status: 'open' }
       ]
     },
     {
-      id: 'reverse-audit', name: 'Reverse Audit', initial: 'R', stage: 'launch',
-      tagline: 'Point it at your subscriptions and it argues, politely, for cancelling most of them.',
-      blurb: 'A subscription auditor that starts from the assumption you should cancel. Scan your statements, see the real annual cost, and get a cancel script you can actually send.',
-      platforms: 'iOS · Android', version: '1.2.3', size: '31 MB', age: '12+',
+      id: 'backtrack', name: 'Backtrack', stage: 'play', theme: 'app-backtrack',
+      icon: 'assets/apps/backtrack/icon.png',
+      tagline: 'Record. Reverse. Try to sing it backwards.',
+      blurb: 'Reverse audio without the toll booth. Record your voice and hear it backwards instantly \u2014 no ads, no daily limit \u2014 then play the scored reverse-singing challenge and share the result.',
+      platforms: 'iOS \u00b7 Android', version: '0.4', channel: 'In design', build: 'Mockups approved',
       shots: [
-        { label: 'SCREEN 01', caption: 'The verdict list' },
-        { label: 'SCREEN 02', caption: 'True annual cost' },
-        { label: 'SCREEN 03', caption: 'Cancel script' },
-        { label: 'SCREEN 04', caption: 'Household view' }
+        { src: 'screen-1.png', caption: 'Hold to record' },
+        { src: 'screen-2.png', caption: 'Original vs reversed' },
+        { src: 'screen-3.png', caption: 'The singing challenge' },
+        { src: 'screen-4.png', caption: 'Your match score' },
+        { src: 'screen-5.png', caption: 'Made for the feed' }
       ],
       features: [
-        { title: 'Guilty until useful', body: 'Every subscription starts flagged. You justify keeping it, not the other way round.' },
-        { title: 'True cost', body: 'Monthly prices shown as what they actually cost you over a year.' },
-        { title: 'Cancel scripts', body: 'Pre-written, firm and polite. Copy, send, done.' }
+        { title: 'No ads, no gates', body: 'Unlimited reverses, free. That is the whole pitch, and it is what the incumbent charges weekly for.' },
+        { title: 'The singing challenge', body: 'Learn the backwards line, record your attempt, get scored on how close you got.' },
+        { title: 'Made for the feed', body: 'A portrait share card with your score on it, ready to post without editing.' }
       ],
       changes: [
-        { ver: '1.2.3', date: '2026-07-24', head: 'Foreign-currency renewals', note: 'Annual renewals billed abroad are now detected and converted properly.' },
-        { ver: '1.2.0', date: '2026-07-05', head: 'Shared household audits', note: 'Audit a household together without sharing bank logins.' },
-        { ver: '1.1.4', date: '2026-06-14', head: 'No more duplicates on re-scan', note: 'Re-scanning a statement stops creating a second copy of every entry.' }
+        { ver: '0.4', date: '2026-07-24', head: 'v1 mockups approved', note: 'Five screens signed off: record, compare, challenge, score and share.' },
+        { ver: '0.3', date: '2026-07-05', head: 'Brand system landed', note: 'The mirror-waveform mark, the violet-to-pink gradient, and the full asset pack.' },
+        { ver: '0.2', date: '2026-06-14', head: 'Competitor teardown', note: 'Review analysis of the incumbent: 46% one-star, ads before first value.' }
       ],
       issues: [
-        { title: "Some challenger bank exports won't parse", text: 'A handful of statement formats are not supported yet.', status: 'open' },
-        { title: 'Household invites expire too quickly', text: 'Invites time out after an hour, which is too tight.', status: 'review' }
+        { title: 'Scoring model not built yet', text: 'The match percentage is designed but not yet implemented.', status: 'open' },
+        { title: 'Share video export is slow', text: 'Rendering the portrait card takes a few seconds too long.', status: 'investigating' }
       ]
     }
   ];
@@ -160,9 +164,17 @@
 
   /* ------------------------------------------------------------ partials -- */
 
+  /* The studio mark, tiled — used where no app is involved. */
   function tile(size, cls) {
     return '<span class="sq-icontile sq-icontile--night ' + (cls || '') + '">' +
              '<img class="sq-icontile__mark" src="' + MARK + '" alt="">' +
+           '</span>';
+  }
+
+  /* A real app icon, squircle-masked. */
+  function appIcon(app, cls) {
+    return '<span class="site-appicon ' + (cls || '') + '">' +
+             '<img src="' + app.icon + '" alt="" loading="lazy">' +
            '</span>';
   }
 
@@ -198,16 +210,17 @@
 
   function viewStudio() {
     var rows = APPS.map(function (a, i) {
-      return '<a class="site-approw ' + STAGES[a.stage].cls + '" href="#/apps/' + a.id + '"' +
+      return '<a class="site-approw ' + a.theme + '" href="#/apps/' + a.id + '"' +
              ' data-reveal style="--i:' + i + '">' +
         '<span class="site-approw__sweep" aria-hidden="true"></span>' +
-        '<span class="site-approw__icon">' + tile(96) + '</span>' +
+        '<span class="site-approw__icon">' + appIcon(a) + '</span>' +
         '<span class="site-approw__body">' +
           '<span class="sq-h3 site-approw__name">' + esc(a.name) + '</span>' +
           '<span class="sq-body-sm site-approw__blurb">' + esc(a.tagline) + '</span>' +
         '</span>' +
         '<span class="site-approw__meta">' +
-          '<span class="sq-pill"><span class="sq-pill__dot"></span>' + esc(STAGES[a.stage].label) + '</span>' +
+          '<span class="sq-pill ' + STAGES[a.stage].cls + '">' +
+            '<span class="sq-pill__dot"></span>' + esc(STAGES[a.stage].label) + '</span>' +
           '<span class="sq-mono">v' + esc(a.version) + '</span>' +
           '<span class="sq-mono">' + esc(a.platforms) + '</span>' +
         '</span>' +
@@ -215,7 +228,8 @@
     }).join('');
 
     var marqueeItems = APPS.map(function (a) {
-      return '<span class="site-marquee__item">' + tile(56) +
+      return '<span class="site-marquee__item ' + a.theme + '">' +
+             appIcon(a, 'site-marquee__icon') +
              '<span class="sq-mono">' + esc(a.name) + '</span></span>';
     }).join('') +
       '<span class="site-marquee__item">' + tile(56) + '<span class="sq-mono">In the forge</span></span>' +
@@ -305,18 +319,18 @@
 
   function viewApps() {
     var cards = APPS.map(function (a, i) {
-      return '<a class="sq-card sq-card--link site-appcard ' + STAGES[a.stage].cls + '"' +
+      return '<a class="sq-card sq-card--link site-appcard ' + a.theme + '"' +
              ' href="#/apps/' + a.id + '" data-reveal style="--i:' + i + '">' +
         '<span class="site-appcard__art">' +
-          tile(88, 'site-appcard__tile') +
-          '<span class="sq-pill site-appcard__stage"><span class="sq-pill__dot"></span>' +
-            esc(STAGES[a.stage].label) + '</span>' +
+          appIcon(a, 'site-appcard__tile') +
+          '<span class="sq-pill site-appcard__stage ' + STAGES[a.stage].cls + '">' +
+            '<span class="sq-pill__dot"></span>' + esc(STAGES[a.stage].label) + '</span>' +
         '</span>' +
         '<span class="site-appcard__body">' +
           '<span class="sq-h3">' + esc(a.name) + '</span>' +
           '<span class="sq-body-sm site-appcard__blurb">' + esc(a.blurb) + '</span>' +
           '<span class="sq-mono site-appcard__meta">v' + esc(a.version) + ' · ' +
-            esc(a.platforms) + ' · ' + esc(a.size) + '</span>' +
+            esc(a.platforms) + ' · ' + esc(a.channel) + '</span>' +
           '<span class="site-appcard__more">Learn more ' +
             '<span class="site-appcard__arrow" aria-hidden="true">↗</span></span>' +
         '</span>' +
@@ -350,18 +364,23 @@
 
   function viewApp(app) {
     var shots = app.shots.map(function (s, i) {
-      return '<figure class="site-shot">' +
-        '<div class="sq-screen">' +
-          '<div class="sq-screen__notch" aria-hidden="true"></div>' +
+      var real = !!s.src;
+      var inner = real
+        ? '<div class="sq-screen__inner">' +
+            '<img class="site-shot__img" src="assets/apps/' + app.id + '/' + s.src + '"' +
+                 ' alt="' + esc(app.name) + ' — ' + esc(s.caption) + '" loading="lazy">' +
+          '</div>'
+        : '<div class="sq-screen__notch" aria-hidden="true"></div>' +
           '<div class="sq-screen__inner site-shot__inner" role="img"' +
-               ' aria-label="Placeholder screenshot ' + (i + 1) + ' of ' + app.shots.length +
+               ' aria-label="Placeholder screen ' + (i + 1) + ' of ' + app.shots.length +
                ' — ' + esc(app.name) + '">' +
-            '<span class="site-shot__initial" aria-hidden="true">' + esc(app.initial) + '</span>' +
-            '<span class="sq-mono site-shot__tag">' + esc(s.label) + '</span>' +
+            '<span class="site-shot__initial" aria-hidden="true">' + esc(app.name.charAt(0)) + '</span>' +
+            '<span class="sq-mono site-shot__tag">Screen 0' + (i + 1) + '</span>' +
             '<span class="sq-mono site-shot__ph">Placeholder</span>' +
             '<span class="sq-slash" style="--slash-x:70%;opacity:.35" aria-hidden="true"></span>' +
-          '</div>' +
-        '</div>' +
+          '</div>';
+      return '<figure class="site-shot">' +
+        '<div class="sq-screen">' + inner + '</div>' +
         '<figcaption class="sq-mono">' + esc(s.caption) + '</figcaption>' +
       '</figure>';
     }).join('');
@@ -411,18 +430,19 @@
         '<a class="sq-btn sq-btn--sm sq-btn--ghost site-back" href="#/apps">← All apps</a>' +
         '<div class="sq-card sq-card--raised sq-field--grid site-detailhero">' +
           '<div class="sq-slash sq-slash--beam" style="--slash-x:34%" aria-hidden="true"></div>' +
-          '<div>' + tile(160, 'site-detailhero__tile sq-glow') + '</div>' +
+          '<div>' + appIcon(app, 'site-detailhero__tile sq-glow') + '</div>' +
           '<div>' +
             '<div class="site-detailhero__top">' +
-              '<span class="sq-pill sq-pill--solid">' + esc(STAGES[app.stage].label) + '</span>' +
+              '<span class="sq-pill sq-pill--solid ' + STAGES[app.stage].cls + '">' +
+                esc(STAGES[app.stage].label) + '</span>' +
               '<span class="sq-mono">Version ' + esc(app.version) + '</span>' +
             '</div>' +
             '<h1 class="sq-h1 site-detailhero__name">' + esc(app.name) + '</h1>' +
             '<p class="sq-lead site-detailhero__blurb">' + esc(app.blurb) + '</p>' +
             '<div class="site-detailhero__pills">' +
               '<span class="sq-pill sq-pill--muted">' + esc(app.platforms) + '</span>' +
-              '<span class="sq-pill sq-pill--muted">' + esc(app.size) + '</span>' +
-              '<span class="sq-pill sq-pill--muted">' + esc(app.age) + '</span>' +
+              '<span class="sq-pill sq-pill--muted">' + esc(app.channel) + '</span>' +
+              '<span class="sq-pill sq-pill--muted">' + esc(app.build) + '</span>' +
             '</div>' +
             '<div class="site-detailhero__actions">' +
               '<span class="sq-btn sq-btn--md" aria-disabled="true">App Store ↗</span>' +
@@ -553,6 +573,10 @@
 
     view.innerHTML = html;
     document.title = title + ' — sideQUESTdigital';
+
+    var root = document.documentElement;
+    APPS.forEach(function (a) { root.classList.remove(a.theme); });
+    if (route.name === 'app' && route.app.theme) root.classList.add(route.app.theme);
 
     railLocked = (route.name === 'app');
     setStage(stage);

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 420" role="img" aria-labelledby="title desc">
+  <title id="title">Reverse Audio reversed white logo</title>
+  <desc id="desc">A solid white Reverse Audio logo for use on dark or gradient backgrounds.</desc>
+  <g transform="translate(30 30) scale(.36)" fill="#FFFFFF">
+    <rect x="32" y="32" width="960" height="960" rx="224" fill="none" stroke="#FFFFFF" stroke-width="34"/>
+    <rect x="174" y="468" width="28" height="88" rx="14"/><rect x="222" y="428" width="28" height="168" rx="14"/><rect x="270" y="376" width="28" height="272" rx="14"/><rect x="318" y="318" width="28" height="388" rx="14"/><rect x="366" y="252" width="28" height="520" rx="14"/><rect x="414" y="194" width="28" height="636" rx="14"/><rect x="462" y="274" width="28" height="476" rx="14"/><rect x="534" y="274" width="28" height="476" rx="14"/><rect x="582" y="194" width="28" height="636" rx="14"/><rect x="630" y="252" width="28" height="520" rx="14"/><rect x="678" y="318" width="28" height="388" rx="14"/><rect x="726" y="376" width="28" height="272" rx="14"/><rect x="774" y="428" width="28" height="168" rx="14"/><rect x="822" y="468" width="28" height="88" rx="14"/>
+    <rect x="508" y="142" width="8" height="740" rx="4"/>
+  </g>
+  <text x="450" y="270" fill="#FFFFFF" font-family="ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', 'DejaVu Sans', sans-serif" font-size="178" font-weight="800" letter-spacing="-8">Reverse Audio</text>
+</svg>

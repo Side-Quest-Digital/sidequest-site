@@ -14,8 +14,9 @@
 <meta property="og:image" content="assets/sidequest-lockup-tagline.png">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" type="image/png" href="assets/sidequest-icon-night.png">
-<link rel="apple-touch-icon" href="assets/sidequest-icon-night.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/sidequest-icon-512.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,11 +43,7 @@
     <div class="site-container site-header__inner">
 
       <a class="site-header__brand" href="#/" aria-label="sideQUESTdigital — home">
-        <img src="assets/sidequest-mark.png" alt="" width="34" height="34" class="site-header__mark">
-        <span class="sq-wordmark" style="--wordmark-size:21px">
-          <span class="sq-wordmark__side">side</span><span
-                class="sq-wordmark__quest"><span class="sq-wordmark__q">Q</span>UEST</span>
-        </span>
+        <span class="sq-logo" style="--logo-size:22px" role="img" aria-label="sideQUESTdigital"><span class="sq-logo__txt">side</span><img class="sq-logo__q" src="assets/sidequest-mark.png" alt=""><span class="sq-logo__txt">UEST</span></span>
         <span class="sq-mono site-header__suffix">digital</span>
       </a>
 
@@ -77,10 +74,7 @@
 
       <div class="site-footer__band">
         <div class="site-footer__brandcol">
-          <span class="sq-wordmark" style="--wordmark-size:26px">
-            <span class="sq-wordmark__side">side</span><span
-                  class="sq-wordmark__quest"><span class="sq-wordmark__q">Q</span>UEST</span>
-          </span>
+          <span class="sq-logo" style="--logo-size:26px" role="img" aria-label="sideQUESTdigital"><span class="sq-logo__txt">side</span><img class="sq-logo__q" src="assets/sidequest-mark.png" alt=""><span class="sq-logo__txt">UEST</span></span>
           <p class="sq-tagline site-footer__tagline">
             <span class="sq-tagline__play">Play.</span>
             <span class="sq-tagline__build">Build.</span>
@@ -93,9 +87,9 @@
 
         <div class="site-footer__col">
           <p class="sq-mono site-footer__coltitle">Apps</p>
-          <a class="site-footer__link" href="#/apps/plantswap">Plantswap</a>
-          <a class="site-footer__link" href="#/apps/vibecheck">Vibecheck</a>
-          <a class="site-footer__link" href="#/apps/reverse-audit">Reverse Audit</a>
+          <a class="site-footer__link" href="#/apps/plantswap">PlantSwap</a>
+          <a class="site-footer__link" href="#/apps/vibecheck">Vibe Check</a>
+          <a class="site-footer__link" href="#/apps/backtrack">Backtrack</a>
         </div>
 
         <div class="site-footer__col">
@@ -121,12 +115,12 @@
 
       <div class="site-footer__legal">
         <p class="sq-mono">© 2025–2026 sideQUESTdigital · Remote</p>
-        <p class="sq-mono site-footer__note">Screenshots, names and photos on this site are placeholders.</p>
+        <p class="sq-mono site-footer__note">Team names and photos are placeholders. App artwork and screens are the real thing.</p>
       </div>
     </div>
 
     <div class="site-footer__giant" aria-hidden="true">
-      side<span class="site-footer__giantq">Q</span>UEST
+      <span>side</span><img class="site-footer__giantq" src="assets/sidequest-mark.png" alt=""><span>UEST</span>
     </div>
   </footer>
 
@@ -159,9 +153,9 @@
         <div class="site-selectwrap">
           <select id="support-app" name="app" data-field-app>
             <option value="general">Not app-specific / the studio</option>
-            <option value="plantswap">Plantswap</option>
-            <option value="vibecheck">Vibecheck</option>
-            <option value="reverse-audit">Reverse Audit</option>
+            <option value="plantswap">PlantSwap</option>
+            <option value="vibecheck">Vibe Check</option>
+            <option value="backtrack">Backtrack</option>
           </select>
         </div>
       </div>

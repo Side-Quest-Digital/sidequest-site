@@ -395,7 +395,8 @@ body.is-locked { overflow: hidden; }
   display: flex; align-items: center; gap: var(--space-3);
   flex: 0 0 auto;
 }
-.site-marquee__item .sq-icontile { --tile-size: 56px; }
+.site-marquee__item .sq-icontile,
+.site-marquee__icon { --tile-size: 56px; }
 
 @keyframes site-marquee { to { transform: translate3d(-50%, 0, 0); } }
 
@@ -438,11 +439,15 @@ body.is-locked { overflow: hidden; }
   .site-approw__meta { flex-direction: column; align-items: flex-end; gap: var(--space-2); }
 }
 
-.site-approw .sq-icontile {
+.site-approw .sq-icontile,
+.site-approw .site-appicon {
   --tile-size: 64px;
   transition: transform var(--dur-base) var(--ease-snap);
 }
-@media (min-width: 768px) { .site-approw .sq-icontile { --tile-size: 96px; } }
+@media (min-width: 768px) {
+  .site-approw .sq-icontile,
+  .site-approw .site-appicon { --tile-size: 96px; }
+}
 
 .site-approw__name { transition: color var(--dur-fast) var(--ease); }
 .site-approw__blurb {
@@ -459,7 +464,8 @@ body.is-locked { overflow: hidden; }
 .site-approw:hover + .site-approw,
 .site-approw:last-of-type:hover { border-bottom-color: var(--tint-accent-40); }
 .site-approw:hover .site-approw__name { color: var(--accent-text); }
-.site-approw:hover .sq-icontile { transform: scale(1.03); }
+.site-approw:hover .sq-icontile,
+.site-approw:hover .site-appicon { transform: scale(1.03); }
 .site-approw:active { background: var(--tint-accent-08); }
 .site-approw:focus-visible { outline-offset: -2px; }
 
@@ -533,7 +539,7 @@ body.is-locked { overflow: hidden; }
   position: absolute;
   top: var(--space-5); left: var(--space-5);
 }
-.site-appcard__tile.sq-icontile { --tile-size: 88px; }
+.site-appcard__tile { --tile-size: 88px; }
 
 .site-appcard__stage { position: absolute; right: var(--space-5); bottom: var(--space-5); }
 
@@ -598,9 +604,9 @@ body.is-locked { overflow: hidden; }
 .site-detailhero > div:not(.sq-slash) { position: relative; z-index: 1; }
 .site-detailhero > .sq-slash { position: absolute; z-index: 0; }
 
-.site-detailhero__tile.sq-icontile { --tile-size: 96px; }
-@media (min-width: 768px)  { .site-detailhero__tile.sq-icontile { --tile-size: 120px; } }
-@media (min-width: 1024px) { .site-detailhero__tile.sq-icontile { --tile-size: 160px; } }
+.site-detailhero__tile { --tile-size: 96px; }
+@media (min-width: 768px)  { .site-detailhero__tile { --tile-size: 120px; } }
+@media (min-width: 1024px) { .site-detailhero__tile { --tile-size: 160px; } }
 
 .site-detailhero__top { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
 .site-detailhero__name { margin-top: var(--space-4); }
@@ -1255,7 +1261,8 @@ body.is-locked { overflow: hidden; }
   .site-appcard:hover,
   .site-shot:hover,
   .site-btn--oninverse:hover,
-  .site-approw:hover .sq-icontile { transform: none !important; }
+  .site-approw:hover .sq-icontile,
+  .site-approw:hover .site-appicon { transform: none !important; }
   .site-approw:hover .site-approw__sweep { animation: none; }
   .site-support { transition: opacity 120ms linear; }
 }
@@ -1272,3 +1279,102 @@ body.is-locked { overflow: hidden; }
   .sq-btn { min-height: 44px; }
   .sq-btn--sm { font-size: 15px; padding: 13px 24px; }
 }
+
+/* ============================================================================
+   THE LOGO — the wordmark with the real Q-and-sword built into it.
+   "sideQUEST" is never plain text: the Q is always the mark.
+   ============================================================================ */
+
+.sq-logo {
+  display: inline-flex;
+  align-items: center;
+  font: 700 var(--logo-size, 22px) / 1 var(--font-display);
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.sq-logo__txt { display: inline-block; }
+.sq-logo__txt:last-child { text-transform: uppercase; }
+
+/* The mark's artwork is wider than its bowl (the blade overhangs bottom-right),
+   so it is oversized against the cap height and tucked back in with margins. */
+.sq-logo__q {
+  width: 1.34em; height: 1.34em;
+  margin: 0 -0.1em 0 -0.06em;
+  transform: translateY(0.055em);
+  flex: 0 0 auto;
+}
+
+/* The Q alone, as a graphic symbol */
+.sq-symbol { width: var(--symbol-size, 40px); height: var(--symbol-size, 40px); flex: 0 0 auto; }
+
+.site-footer__giant { display: flex; align-items: center; justify-content: center; }
+.site-footer__giantq {
+  width: 0.92em; height: 0.92em;
+  margin: 0 -0.06em;
+  transform: translateY(0.02em);
+  opacity: 0.55;
+}
+
+/* ============================================================================
+   APP WORLDS — each app page adopts its own brand colour.
+   Only the accent tokens are overridden, so every accent-aware component
+   re-tints in one move and the site's structure stays identical.
+   Values are sampled from each app's real icon; every accent clears 4.5:1 on
+   the night canvas and takes ink on its own fill.
+   ============================================================================ */
+
+.app-plantswap {
+  --accent:      #52B788;
+  --accent-hi:   #62C79B;
+  --accent-text: #62C79B;
+  --accent-glow: rgba(82, 183, 136, 0.40);
+  --accent-on:   var(--sq-ink);
+  --app-deep:    #2D6A4F;
+  --app-soft:    #F0F4F2;
+}
+.app-vibecheck {
+  --accent:      #FF4DA6;
+  --accent-hi:   #FF6FB6;
+  --accent-text: #FF4DA6;
+  --accent-glow: rgba(255, 77, 166, 0.40);
+  --accent-on:   var(--sq-ink);
+  --app-deep:    #13122B;
+  --app-soft:    #7B61FF;
+}
+.app-backtrack {
+  --accent:      #E554A9;
+  --accent-hi:   #F06FBA;
+  --accent-text: #E554A9;
+  --accent-glow: rgba(229, 84, 169, 0.40);
+  --accent-on:   var(--sq-ink);
+  --app-deep:    #7434DD;
+  --app-soft:    #F1EAFC;
+}
+
+/* App icon — the real artwork, squircle-masked, full bleed. */
+.site-appicon {
+  display: block;
+  width: var(--tile-size, 96px);
+  height: var(--tile-size, 96px);
+  border-radius: var(--icon-radius-pct);
+  overflow: hidden;
+  flex: 0 0 auto;
+  box-shadow: var(--shadow-icon);
+  background: var(--surface-raised);
+}
+.site-appicon img { width: 100%; height: 100%; object-fit: cover; }
+
+/* A ribbon of the app's own colour behind its detail hero. */
+.site-detailhero::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--accent), var(--app-deep, var(--accent)));
+  z-index: 2;
+}
+
+/* Real screenshots sit edge-to-edge inside the device frame. */
+.site-shot__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sq-screen__inner:has(.site-shot__img) { background: #000; }

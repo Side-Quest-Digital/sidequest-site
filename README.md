@@ -16,7 +16,8 @@ as a real site rather than a Claude Design runtime component.
 index.html          Shell: header, stage rail, footer, support slide-over
 site.css            Site layer — composite tokens + site components only
 site.js             Data, hash router, views, interactions
-assets/             Brand artwork (mark, wordmark, lockup, icon tiles)
+assets/             sideQUEST brand artwork + favicons
+assets/apps/        Real icons and screenshots for each app
 _ds/sidequest-brand-445e24cf-…/
                     The canonical brand design system. DO NOT EDIT.
 design/design-spec.md
@@ -26,6 +27,32 @@ design/design-spec.md
 `_ds/` is the shared sideQUEST brand system (tokens for colour, type, spacing,
 effects, plus the component library). It is imported first; `site.css` layers on
 top and never redefines a `--sq-*` value, never adds a hex, never adds a typeface.
+
+## The logo
+
+**"sideQUEST" is never set as plain text.** The Q is always the mark — the
+Q-and-sword artwork — built into the wordmark (`.sq-logo` in `site.css`). The Q
+on its own is the favicon, the apple-touch icon, and the graphic symbol used in
+the "more to come" tile and the oversized hero watermark.
+
+The mark was recovered from the brand icon tile and lives at
+`assets/sidequest-mark.png`; `favicon-32.png`, `apple-touch-icon.png` and
+`sidequest-icon-512.png` are generated from it on the void squircle.
+
+## App worlds
+
+Each app page adopts its own brand colour by overriding only the accent tokens,
+so every accent-aware component re-tints in one move:
+
+| App | Stage | Accent | Source |
+|---|---|---|---|
+| PlantSwap | Launch | `#52B788` | sampled from the real app icon |
+| Vibe Check | Build | `#FF4DA6` | its `COLORS.primary` |
+| Backtrack | Play | `#E554A9` | the Reverse Audio brand kit |
+
+Stage pills keep the **stage** colour (violet / lime / cyan) even inside an app
+world, so the Play → Build → Launch coding is never lost. Every accent clears
+4.5:1 on the night canvas and takes ink on its own fill.
 
 ## The signature move — the Stage Rail
 
@@ -50,7 +77,7 @@ Accent colour is therefore never decorative. Every splash of lime or cyan means
 |---|---|
 | `#/` | Studio |
 | `#/apps` | Apps index |
-| `#/apps/plantswap`, `#/apps/vibecheck`, `#/apps/reverse-audit` | App detail |
+| `#/apps/plantswap`, `#/apps/vibecheck`, `#/apps/backtrack` | App detail |
 | `#/team` | Team |
 
 ## Local development
@@ -75,15 +102,27 @@ Hash routing means it also works opened straight from the filesystem.
   take its text from `--accent-on`. White on lime is 1.51:1 and white on cyan is
   1.81:1 — both hard failures. Lime and cyan fills always take ink.
 
-## Placeholders — replace before this is a real launch
+## Where the app assets came from
 
-- **App icons.** All three apps currently render the sideQUEST mark. They need
-  three real icons.
-- **Screenshots.** The phone frames are designed placeholders, not real screens.
+All three apps are the real workspace projects, not invented ones:
+
+| App | Icon | Screens |
+|---|---|---|
+| PlantSwap | `Plant Swap/Assets/Apple/App Icon (1024x1024)/` | 5 real TestFlight captures from `Assets/Apple/Actual app/` |
+| Vibe Check | `Vibe Check/assets/icon-vibecheck.png` | **none yet** — themed placeholder frames |
+| Backtrack | `reverse/reverse-audio-brand-assets/app-icon-512.png` | 5 frames rendered from `reverse/design/mockups/backtrack-mockups-v1.html` |
+
+Names, taglines, blurbs and feature copy are taken from each project's own
+README, brief and brand guide.
+
+## Still placeholder — replace before this is a real launch
+
+- **Vibe Check screens.** The only app without real captures. Run the Expo
+  prototype and grab five.
 - **Team.** Names are "Placeholder name"; photos are initials avatars.
 - **Store links.** App Store / Google Play buttons are deliberately inert and
-  labelled "Store links go live with the listing" — no URLs have been supplied.
+  labelled "Store links go live with the listing" — no URLs exist yet.
 - **Contact.** The support form has no backend; it resolves to a local success
   state. No email address is published anywhere on the site, on purpose.
-- **Copy.** Release notes, known issues and features are plausible placeholder
-  content, not real changelogs.
+- **Release notes and known issues.** Illustrative, not real changelogs, though
+  they track each project's actual history closely.
