@@ -618,6 +618,16 @@ body.is-locked { overflow: hidden; }
 @media (max-width: 767px) { .site-detailhero__actions .sq-btn { width: 100%; } }
 .site-detailhero__storenote { margin-top: var(--space-3); }
 
+/* The feedback doors are a separate group from the store buttons — getting the
+   app and telling us about it are different jobs. */
+.site-detailhero__feedback {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+}
+.site-detailhero__feedbacklabel { color: var(--text-tertiary); }
+.site-detailhero__feedback .site-detailhero__actions { margin-top: var(--space-3); }
+
 /* Store buttons have no destination yet — they are honestly inert. */
 .sq-btn[aria-disabled="true"] {
   background: var(--surface-card);

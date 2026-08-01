@@ -196,6 +196,29 @@
     '</header>';
   }
 
+  /* One form, three doors. Naming the kinds on the button is the only way a
+     visitor learns they can do more than report a bug — each one opens the
+     same slide-over with that kind pre-picked. A bug report against an app
+     that has never shipped makes no sense, so live apps get that door only. */
+  function supportActions(app) {
+    var doors = [];
+    if (isLive(app)) doors.push({ kind: 'Bug report', label: 'Report a bug' });
+    doors.push({ kind: 'Question',     label: 'Ask a question' });
+    doors.push({ kind: 'Feature idea', label: 'Request a feature' });
+
+    return '<div class="site-detailhero__feedback">' +
+      '<p class="sq-mono site-detailhero__feedbacklabel">Something to tell us?</p>' +
+      '<div class="site-detailhero__actions">' +
+        doors.map(function (d, i) {
+          return '<button class="sq-btn sq-btn--md ' +
+            (i === 0 ? 'sq-btn--primary' : 'sq-btn--secondary') +
+            '" data-support-open data-app="' + app.id +
+            '" data-kind="' + esc(d.kind) + '">' + esc(d.label) + '</button>';
+        }).join('') +
+      '</div>' +
+    '</div>';
+  }
+
   /* No stage class — the panel takes whichever accent the scroll band is on. */
   function ctaPanel(eyebrow, head, sub, label, appId) {
     return '<section class="site-section" data-reveal>' +
@@ -281,7 +304,7 @@
           "we'd actually keep on our own home screens. One live, two on the way.</p>" +
         '<div class="site-hero__cta">' +
           '<a class="sq-btn sq-btn--lg sq-btn--primary" href="#/apps">See the apps</a>' +
-          '<button class="sq-btn sq-btn--lg sq-btn--secondary" data-support-open>Report a bug</button>' +
+          '<button class="sq-btn sq-btn--lg sq-btn--secondary" data-support-open>Send feedback</button>' +
         '</div>' +
       '</div>' +
     '</section>' +
@@ -318,9 +341,9 @@
       '</div>' +
     '</div>' +
 
-    ctaPanel('Support', 'Found a bug? Brilliant. Tell us.',
+    ctaPanel('Feedback', 'Bug, question or idea — tell us.',
              'No ticket portal, no bot. It goes straight to the people who wrote the code.',
-             'Report a bug');
+             'Send feedback');
   }
 
   function viewApps() {
@@ -453,19 +476,18 @@
                   '<span class="sq-pill sq-pill--muted">' + esc(app.build) + '</span>'
                 : '<span class="sq-pill sq-pill--muted">In development</span>') +
             '</div>' +
-            '<div class="site-detailhero__actions">' +
-              (isLive(app)
-                ? '<span class="sq-btn sq-btn--md" aria-disabled="true">App Store ↗</span>' +
-                  '<span class="sq-btn sq-btn--md" aria-disabled="true">Google Play ↗</span>'
-                : '') +
-              '<button class="sq-btn sq-btn--md sq-btn--primary" data-support-open data-app="' +
-                app.id + '">' + (isLive(app) ? 'Report a bug' : 'Ask about it') + '</button>' +
-            '</div>' +
+            (isLive(app)
+              ? '<div class="site-detailhero__actions">' +
+                  '<span class="sq-btn sq-btn--md" aria-disabled="true">App Store ↗</span>' +
+                  '<span class="sq-btn sq-btn--md" aria-disabled="true">Google Play ↗</span>' +
+                '</div>'
+              : '') +
             '<p class="sq-caption site-detailhero__storenote">' +
               (isLive(app)
                 ? 'Store links go live with the listing.'
                 : "Not released yet. We'll announce it here when it is.") +
             '</p>' +
+            supportActions(app) +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -506,13 +528,14 @@
       : '') +
 
     (isLive(app)
-      ? ctaPanel('Support', 'Something off in ' + app.name + '?',
-                 "Tell us and we'll look today. It goes to the people who maintain it.",
-                 'Reach out', app.id)
+      ? ctaPanel('Feedback', 'Something to say about ' + app.name + '?',
+                 "A bug, a question, or something it should do. We'll look today, " +
+                 'and it goes to the people who maintain it.',
+                 'Send feedback', app.id)
       : ctaPanel('Coming soon', app.name + ' is still being built.',
                  'It is not released yet. Ask us anything about it, or tell us what it ' +
                  'needs to do — we are still deciding some of it.',
-                 'Get in touch', app.id));
+                 'Send feedback', app.id));
   }
 
   function viewTeam() {
@@ -762,15 +785,19 @@
 
   var supportOpen = false;
   var lastFocused = null;
-  var kind = KINDS[0];
+  /* Nothing is pre-selected. Most entry points into this form now pass an
+     explicit kind, and the generic ones ("Send feedback") genuinely do not
+     know yet — defaulting those to "Bug report" would mislabel the report. */
+  var kind = null;
   var touched = {};
 
   KINDS.forEach(function (k, i) {
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'site-kind';
+    if (i === 0) b.id = 'support-kind';
     b.setAttribute('role', 'radio');
-    b.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
+    b.setAttribute('aria-checked', 'false');
     b.tabIndex = i === 0 ? 0 : -1;
     b.textContent = k;
     b.addEventListener('click', function () { selectKind(k); });
@@ -783,13 +810,23 @@
     kindsBox.appendChild(b);
   });
 
+  /* Pass null to clear the selection — the roving tabindex falls back to the
+     first option so the group stays reachable by keyboard. */
   function selectKind(k) {
-    kind = k;
+    kind = k || null;
     Array.prototype.forEach.call(kindsBox.children, function (b, i) {
-      var on = KINDS[i] === k;
+      var on = kind !== null && KINDS[i] === kind;
       b.setAttribute('aria-checked', on ? 'true' : 'false');
-      b.tabIndex = on ? 0 : -1;
+      b.tabIndex = on || (kind === null && i === 0) ? 0 : -1;
     });
+    if (kind) showKindError(null);
+  }
+
+  function showKindError(msg) {
+    var box = $('#support-kind-error');
+    kindsBox.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    box.textContent = msg || '';
+    box.hidden = !msg;
   }
 
   function openSupport(opts) {
@@ -803,7 +840,9 @@
       var a = appById(opts.app);
       if (a) { if (a.theme) panel.classList.add(a.theme); appEl.value = a.id; }
     }
-    if (opts.kind) selectKind(opts.kind);
+    /* An entry point that names a kind pre-picks it; a generic one leaves the
+       choice open rather than guessing. */
+    selectKind(opts.kind || null);
 
     scrim.hidden = false; panel.hidden = false;
     view.setAttribute('inert', '');
@@ -912,6 +951,11 @@
     touched.email = touched.message = true;
 
     var errs = [];
+
+    var kindMsg = kind ? null : 'Tell us what kind of message this is.';
+    showKindError(kindMsg);
+    if (kindMsg) errs.push({ el: kindsBox.children[0], msg: kindMsg });
+
     [emailEl, msgEl].forEach(function (el) {
       var m = validate(el);
       if (m) errs.push({ el: el, msg: m });
@@ -1017,9 +1061,9 @@
 
   function resetForm() {
     form.reset();
-    selectKind(KINDS[0]);
+    selectKind(null);
     touched = {};
-    showError(emailEl, null); showError(msgEl, null);
+    showError(emailEl, null); showError(msgEl, null); showKindError(null);
     countEl.textContent = '0 / 1000'; countEl.style.color = '';
     summary.hidden = true;
     resetSubmitBtn();

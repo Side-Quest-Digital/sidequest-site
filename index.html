@@ -57,7 +57,7 @@
         <a class="site-nav__link" href="#/apps">Apps</a>
         <a class="site-nav__link" href="#/team">Team</a>
         <button class="sq-btn sq-btn--sm sq-btn--secondary site-nav__cta" data-support-open>
-          Report a bug
+          Feedback
         </button>
       </nav>
 
@@ -101,12 +101,17 @@
 
         <div class="site-footer__col">
           <p class="sq-mono site-footer__coltitle">Say hello</p>
-          <button class="site-footer__link site-footer__link--btn" data-support-open>Report a bug</button>
+          <button class="site-footer__link site-footer__link--btn" data-support-open data-kind="Bug report">
+            Report a bug
+          </button>
           <button class="site-footer__link site-footer__link--btn" data-support-open data-kind="Question">
             Ask a question
           </button>
           <button class="site-footer__link site-footer__link--btn" data-support-open data-kind="Feature idea">
-            Suggest something
+            Request a feature
+          </button>
+          <button class="site-footer__link site-footer__link--btn" data-support-open data-kind="Something nice">
+            Say something nice
           </button>
         </div>
       </div>
@@ -145,7 +150,9 @@
 
       <fieldset class="site-field">
         <legend class="sq-mono site-field__label">What is it?</legend>
-        <div class="site-kinds" role="radiogroup" aria-label="What is it?" data-kinds></div>
+        <div class="site-kinds" role="radiogroup" aria-label="What is it?"
+             aria-describedby="support-kind-error" data-kinds></div>
+        <p class="site-field__error" id="support-kind-error" hidden></p>
       </fieldset>
 
       <div class="site-field">

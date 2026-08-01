@@ -71,11 +71,39 @@ Payload (JSON, POST):
 | Field | Notes |
 |---|---|
 | `ref` | `SQ-XXXXXX`, generated client-side, shown on the success screen |
-| `kind` | `Bug report` \| `Question` \| `Feature idea` \| `Something nice` |
-| `app` / `appLabel` | `general` \| `plantswap` \| `vibecheck` \| `backtrack` |
+| `kind` | one of four exact strings — see below |
+| `app` / `appLabel` | one of four exact ids — see below |
 | `email`, `message` | the two required fields |
-| `diagnostics` | the "attach anonymous diagnostics" checkbox |
+| `diagnostics` | boolean, the "attach anonymous diagnostics" checkbox |
 | `submittedAt`, `source`, `page`, `userAgent`, `language`, `viewport` | context |
+
+**These are routing keys for n8n — treat the exact strings as a contract and do
+not reword them without saying so.** Button labels on the site differ from the
+values deliberately (a button reads "Request a feature"; the value stays
+`Feature idea`), so copy can be changed freely without breaking a routing rule.
+
+`kind` — from `KINDS` in [site.js](site.js), always exactly one, never empty
+(submission is blocked until one is chosen):
+
+| Value | Reached from |
+|---|---|
+| `Bug report` | footer "Report a bug"; live app pages only |
+| `Question` | footer "Ask a question"; every app page |
+| `Feature idea` | footer "Request a feature"; every app page |
+| `Something nice` | footer "Say something nice"; the form itself |
+
+`app` / `appLabel` — from the `APPS` array plus a general option:
+
+| `app` | `appLabel` |
+|---|---|
+| `general` | `Not app-specific / the studio` |
+| `plantswap` | `PlantSwap` |
+| `vibecheck` | `Vibe Check` |
+| `backtrack` | `Backtrack` |
+
+`general` is the default when the form is opened from the header, hero or
+footer. Opening from an app page pre-selects that app. **Adding an app to
+`APPS` adds a new `app` value** — update the n8n routing at the same time.
 
 The send is a single CORS `application/json` POST whose status is checked; any
 failure shows in the existing error summary instead of the success screen.
