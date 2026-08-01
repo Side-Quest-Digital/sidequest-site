@@ -6,21 +6,31 @@
   'use strict';
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* Support form destination. n8n production webhook — the workflow is active,
+     so this accepts requests continuously and answers the CORS preflight.
+     The `/webhook-test/` variant of the same id only works while n8n is
+     listening after "Execute workflow", and only for a single call. */
+  var SUPPORT_WEBHOOK =
+    'https://personal.sleepingaigiant.com/webhook/34123681-468b-439f-aae1-7330dac8c0f9';
   /* The tile supplies the night background; the artwork inside it is the bare
      transparent mark. Nesting the full icon-night tile would double the border. */
   var MARK = 'assets/sidequest-mark.png';
 
   /* ---------------------------------------------------------------- data -- */
 
+  /* Play / Build / Launch is how the studio works — it drives the rail, the
+     scroll bands and the accent. It is deliberately NOT a per-app status:
+     an app is either live or it isn't. See `status` on each app below. */
   var STAGES = {
-    play:   { cls: 'sq-stage-play',   label: 'Play' },
-    build:  { cls: 'sq-stage-build',  label: 'Build' },
-    launch: { cls: 'sq-stage-launch', label: 'Launch' }
+    play:   { cls: 'sq-stage-play' },
+    build:  { cls: 'sq-stage-build' },
+    launch: { cls: 'sq-stage-launch' }
   };
 
   var APPS = [
     {
-      id: 'plantswap', name: 'PlantSwap', stage: 'launch', theme: 'app-plantswap',
+      id: 'plantswap', name: 'PlantSwap', status: 'live', theme: 'app-plantswap',
       icon: 'assets/apps/plantswap/icon.png',
       tagline: 'Snap any meal. Get a vegan version, instantly.',
       blurb: 'Point the camera at any dish \u2014 restaurant plate, takeaway, home-cooked \u2014 and every non-vegan ingredient gets swapped for the best plant-based alternative, with the reasoning shown.',
@@ -48,11 +58,11 @@
       ]
     },
     {
-      id: 'vibecheck', name: 'Vibe Check', stage: 'build', theme: 'app-vibecheck',
+      id: 'vibecheck', name: 'Vibe Check', status: 'soon', theme: 'app-vibecheck',
       icon: 'assets/apps/vibecheck/icon.png', logo: 'assets/apps/vibecheck/logo.png',
       tagline: 'Say the line. Sell the feeling. Let the room guess.',
       blurb: 'A party game about performance. One player holds the phone up, the room says an ordinary line in a secret emotion, and the holder has sixty seconds to work out what the room is doing.',
-      platforms: 'iOS \u00b7 Android', version: '0.9', channel: 'Expo Go', build: 'Playable prototype',
+      platforms: 'iOS \u00b7 Android',
       shots: [
         { caption: 'Read the room' },
         { caption: 'Sixty seconds' },
@@ -62,22 +72,14 @@
         { title: 'Read the room', body: 'Phone to the forehead, screen facing out. Tilt down to score it, tilt up to pass.' },
         { title: 'Filmed as you play', body: 'The front camera catches the round, so the best bits survive the night.' },
         { title: 'Packs for every crowd', body: 'Themed decks of lines and emotions, including one that stays behind a PIN.' }
-      ],
-      changes: [
-        { ver: '0.9', date: '2026-07-21', head: 'Rebranded to Vibe Check', note: 'New mark, new palette, new wordmark throughout. The codename Echo is retired.' },
-        { ver: '0.8', date: '2026-06-30', head: 'The share stage', note: 'A portrait share card with a card ticker synced to the round footage.' },
-        { ver: '0.7', date: '2026-06-09', head: 'Theme packs', note: 'A pack store with a paywall, plus the PIN-gated After Dark deck.' }
-      ],
-      issues: [
-        { title: 'Tilt detection drifts on older phones', text: 'The gyroscope needs a re-centre if the round runs long.', status: 'open' }
       ]
     },
     {
-      id: 'backtrack', name: 'Backtrack', stage: 'play', theme: 'app-backtrack',
+      id: 'backtrack', name: 'Backtrack', status: 'soon', theme: 'app-backtrack',
       icon: 'assets/apps/backtrack/icon.png',
       tagline: 'Record. Reverse. Try to sing it backwards.',
       blurb: 'Reverse audio without the toll booth. Record your voice and hear it backwards instantly \u2014 no ads, no daily limit \u2014 then play the scored reverse-singing challenge and share the result.',
-      platforms: 'iOS \u00b7 Android', version: '0.4', channel: 'In design', build: 'Mockups approved',
+      platforms: 'iOS \u00b7 Android',
       shots: [
         { src: 'screen-1.png', caption: 'Hold to record' },
         { src: 'screen-2.png', caption: 'Original vs reversed' },
@@ -89,24 +91,23 @@
         { title: 'No ads, no gates', body: 'Unlimited reverses, free. That is the whole pitch, and it is what the incumbent charges weekly for.' },
         { title: 'The singing challenge', body: 'Learn the backwards line, record your attempt, get scored on how close you got.' },
         { title: 'Made for the feed', body: 'A portrait share card with your score on it, ready to post without editing.' }
-      ],
-      changes: [
-        { ver: '0.4', date: '2026-07-24', head: 'v1 mockups approved', note: 'Five screens signed off: record, compare, challenge, score and share.' },
-        { ver: '0.3', date: '2026-07-05', head: 'Brand system landed', note: 'The mirror-waveform mark, the violet-to-pink gradient, and the full asset pack.' },
-        { ver: '0.2', date: '2026-06-14', head: 'Competitor teardown', note: 'Review analysis of the incumbent: 46% one-star, ads before first value.' }
-      ],
-      issues: [
-        { title: 'Scoring model not built yet', text: 'The match percentage is designed but not yet implemented.', status: 'open' },
-        { title: 'Share video export is slow', text: 'Rendering the portrait card takes a few seconds too long.', status: 'investigating' }
       ]
     }
   ];
 
-  var TEAM = [
-    { initials: 'AM', role: 'Founder · iOS',   note: 'Writes the Swift, argues for fewer features.', tz: 'UTC+1' },
-    { initials: 'JK', role: 'Android',         note: 'Believes in Material until it stops being useful.', tz: 'UTC−5' },
-    { initials: 'SR', role: 'Design',          note: 'Owns the sword, the violet and the kerning.', tz: 'UTC+8' },
-    { initials: 'DB', role: 'Support · QA',    note: 'Reads every bug report. Yes, really.', tz: 'UTC+11' }
+  /* PlantSwap is the only app on a store. Everything else says so, plainly. */
+  var RELEASE = {
+    live: { label: 'Live',        pill: 'sq-pill' },
+    soon: { label: 'Coming soon', pill: 'sq-pill sq-pill--muted' }
+  };
+
+  function isLive(a) { return a.status === 'live'; }
+
+  /* The team page describes the mix of skills, never the individuals. */
+  var MAKEUP = [
+    { title: 'Developers',    body: 'The people who write the apps, on both platforms, and who read every bug report that lands.' },
+    { title: 'Marketers',     body: 'The people who work out who an app is for, and how it finds them once it is out.' },
+    { title: 'Business side', body: 'The people who decide what gets built next, what gets cut, and what it costs to keep going.' }
   ];
 
   var VALUES = [
@@ -190,8 +191,9 @@
     '</header>';
   }
 
-  function ctaPanel(stage, eyebrow, head, sub, label, appId) {
-    return '<section class="site-section ' + STAGES[stage].cls + '" data-reveal>' +
+  /* No stage class — the panel takes whichever accent the scroll band is on. */
+  function ctaPanel(eyebrow, head, sub, label, appId) {
+    return '<section class="site-section" data-reveal>' +
       '<div class="site-container">' +
         '<div class="sq-card sq-card--accent sq-cut-tr site-cta">' +
           '<div>' +
@@ -219,9 +221,8 @@
           '<span class="sq-body-sm site-approw__blurb">' + esc(a.tagline) + '</span>' +
         '</span>' +
         '<span class="site-approw__meta">' +
-          '<span class="sq-pill ' + STAGES[a.stage].cls + '">' +
-            '<span class="sq-pill__dot"></span>' + esc(STAGES[a.stage].label) + '</span>' +
-          '<span class="sq-mono">v' + esc(a.version) + '</span>' +
+          '<span class="' + RELEASE[a.status].pill + '">' +
+            '<span class="sq-pill__dot"></span>' + esc(RELEASE[a.status].label) + '</span>' +
           '<span class="sq-mono">' + esc(a.platforms) + '</span>' +
         '</span>' +
       '</a>';
@@ -244,7 +245,7 @@
     }).join('');
 
     var stats = [
-      { num: '3',    label: 'Apps live' },
+      { num: '3',    label: 'Apps in the making' },
       { num: '2',    label: 'Platforms, natively' },
       { num: '<24h', label: 'Typical first reply', accent: true },
       { num: '100%', label: 'Remote, since day one' }
@@ -272,7 +273,7 @@
           '</p>' +
         '</div>' +
         '<p class="sq-lead site-hero__lead">sideQUESTdigital is a remote crew that ships apps ' +
-          "we'd actually keep on our own home screens. Three live, more in the forge.</p>" +
+          "we'd actually keep on our own home screens. One live, two on the way.</p>" +
         '<div class="site-hero__cta">' +
           '<a class="sq-btn sq-btn--lg sq-btn--primary" href="#/apps">See the apps</a>' +
           '<button class="sq-btn sq-btn--lg sq-btn--secondary" data-support-open>Report a bug</button>' +
@@ -286,7 +287,7 @@
 
     '<section class="site-section">' +
       '<div class="site-container">' +
-        sechead('The work', 'Three live, more in the forge.', '03 apps',
+        sechead('The work', 'One live, two on the way.', '03 apps',
                 'Every one of them is something at least one of us wanted on their own phone first.') +
         '<div class="site-ledger">' + rows + '</div>' +
         '<div class="site-approw__more">' +
@@ -312,7 +313,7 @@
       '</div>' +
     '</div>' +
 
-    ctaPanel('launch', 'Support', 'Found a bug? Brilliant. Tell us.',
+    ctaPanel('Support', 'Found a bug? Brilliant. Tell us.',
              'No ticket portal, no bot. It goes straight to the people who wrote the code.',
              'Report a bug');
   }
@@ -323,14 +324,15 @@
              ' href="#/apps/' + a.id + '" data-reveal style="--i:' + i + '">' +
         '<span class="site-appcard__art">' +
           appIcon(a, 'site-appcard__tile') +
-          '<span class="sq-pill site-appcard__stage ' + STAGES[a.stage].cls + '">' +
-            '<span class="sq-pill__dot"></span>' + esc(STAGES[a.stage].label) + '</span>' +
+          '<span class="' + RELEASE[a.status].pill + ' site-appcard__stage">' +
+            '<span class="sq-pill__dot"></span>' + esc(RELEASE[a.status].label) + '</span>' +
         '</span>' +
         '<span class="site-appcard__body">' +
           '<span class="sq-h3">' + esc(a.name) + '</span>' +
           '<span class="sq-body-sm site-appcard__blurb">' + esc(a.blurb) + '</span>' +
-          '<span class="sq-mono site-appcard__meta">v' + esc(a.version) + ' · ' +
-            esc(a.platforms) + ' · ' + esc(a.channel) + '</span>' +
+          '<span class="sq-mono site-appcard__meta">' + esc(a.platforms) +
+            (isLive(a) ? ' · v' + esc(a.version) + ' · ' + esc(a.channel) : ' · In development') +
+          '</span>' +
           '<span class="site-appcard__more">Learn more ' +
             '<span class="site-appcard__arrow" aria-hidden="true">↗</span></span>' +
         '</span>' +
@@ -343,8 +345,8 @@
       '<div class="site-container">' +
         '<p class="sq-eyebrow">The catalogue</p>' +
         "<h1 class=\"sq-hero\">Everything we've shipped,<br>and what's next.</h1>" +
-        '<p class="sq-lead site-hero__lead">Pick an app for release notes, known issues, and a direct ' +
-          'line to the people who maintain it.</p>' +
+        '<p class="sq-lead site-hero__lead">Pick an app for what it does, where it has got to, ' +
+          'and a direct line to the people building it.</p>' +
       '</div>' +
     '</section>' +
 
@@ -354,7 +356,7 @@
           '<div class="site-forge sq-cut-tr" data-reveal style="--i:3">' +
             '<img src="assets/sidequest-mark.png" alt="" aria-hidden="true">' +
             '<h3 class="sq-h3">More to come</h3>' +
-            '<p class="sq-mono">Two in the forge</p>' +
+            '<p class="sq-mono">In the forge</p>' +
             '<p class="sq-caption">We\'ll announce them when they\'re worth announcing.</p>' +
           '</div>' +
         '</div>' +
@@ -393,7 +395,7 @@
       '</div>';
     }).join('');
 
-    var releases = app.changes.map(function (c, i) {
+    var releases = (app.changes || []).map(function (c, i) {
       return '<li class="site-release' + (i === 0 ? ' is-latest' : '') + '" data-reveal style="--i:' + i + '">' +
         '<span class="sq-mono site-release__ver">v' + esc(c.ver) + '</span>' +
         '<div class="site-release__body">' +
@@ -407,7 +409,7 @@
       '</li>';
     }).join('');
 
-    var issues = app.issues.length
+    var issues = (app.issues || []).length
       ? app.issues.map(function (n, i) {
           var st = STATUS[n.status];
           return '<li class="site-issue" data-reveal style="--i:' + i + '">' +
@@ -433,24 +435,32 @@
           '<div>' + appIcon(app, 'site-detailhero__tile sq-glow') + '</div>' +
           '<div>' +
             '<div class="site-detailhero__top">' +
-              '<span class="sq-pill sq-pill--solid ' + STAGES[app.stage].cls + '">' +
-                esc(STAGES[app.stage].label) + '</span>' +
-              '<span class="sq-mono">Version ' + esc(app.version) + '</span>' +
+              '<span class="' + RELEASE[app.status].pill + '">' +
+                '<span class="sq-pill__dot"></span>' + esc(RELEASE[app.status].label) + '</span>' +
+              (isLive(app) ? '<span class="sq-mono">Version ' + esc(app.version) + '</span>' : '') +
             '</div>' +
             '<h1 class="sq-h1 site-detailhero__name">' + esc(app.name) + '</h1>' +
             '<p class="sq-lead site-detailhero__blurb">' + esc(app.blurb) + '</p>' +
             '<div class="site-detailhero__pills">' +
               '<span class="sq-pill sq-pill--muted">' + esc(app.platforms) + '</span>' +
-              '<span class="sq-pill sq-pill--muted">' + esc(app.channel) + '</span>' +
-              '<span class="sq-pill sq-pill--muted">' + esc(app.build) + '</span>' +
+              (isLive(app)
+                ? '<span class="sq-pill sq-pill--muted">' + esc(app.channel) + '</span>' +
+                  '<span class="sq-pill sq-pill--muted">' + esc(app.build) + '</span>'
+                : '<span class="sq-pill sq-pill--muted">In development</span>') +
             '</div>' +
             '<div class="site-detailhero__actions">' +
-              '<span class="sq-btn sq-btn--md" aria-disabled="true">App Store ↗</span>' +
-              '<span class="sq-btn sq-btn--md" aria-disabled="true">Google Play ↗</span>' +
+              (isLive(app)
+                ? '<span class="sq-btn sq-btn--md" aria-disabled="true">App Store ↗</span>' +
+                  '<span class="sq-btn sq-btn--md" aria-disabled="true">Google Play ↗</span>'
+                : '') +
               '<button class="sq-btn sq-btn--md sq-btn--primary" data-support-open data-app="' +
-                app.id + '">Report a bug</button>' +
+                app.id + '">' + (isLive(app) ? 'Report a bug' : 'Ask about it') + '</button>' +
             '</div>' +
-            '<p class="sq-caption site-detailhero__storenote">Store links go live with the listing.</p>' +
+            '<p class="sq-caption site-detailhero__storenote">' +
+              (isLive(app)
+                ? 'Store links go live with the listing.'
+                : "Not released yet. We'll announce it here when it is.") +
+            '</p>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -470,35 +480,44 @@
       '</div>' +
     '</section>' +
 
-    '<section class="site-section">' +
-      '<div class="site-container site-twocol">' +
-        '<div>' +
-          sechead('History', 'Release notes.', '0' + app.changes.length + ' releases') +
-          '<ol class="site-releases">' + releases + '</ol>' +
-        '</div>' +
-        '<div>' +
-          sechead('Honesty', 'Known issues.',
-                  app.issues.length ? '0' + app.issues.length + ' open' : 'all clear') +
-          '<ul class="site-issues">' + issues + '</ul>' +
-          '<p class="sq-caption" style="margin-top:var(--space-5)">Hit something not on this ' +
-            'list? That is exactly what the button below is for.</p>' +
-        '</div>' +
-      '</div>' +
-    '</section>' +
+    /* Release notes and known issues only mean something once an app has
+       actually shipped. Everything else is still being built. */
+    (isLive(app)
+      ? '<section class="site-section">' +
+          '<div class="site-container site-twocol">' +
+            '<div>' +
+              sechead('History', 'Release notes.', '0' + app.changes.length + ' releases') +
+              '<ol class="site-releases">' + releases + '</ol>' +
+            '</div>' +
+            '<div>' +
+              sechead('Honesty', 'Known issues.',
+                      app.issues.length ? '0' + app.issues.length + ' open' : 'all clear') +
+              '<ul class="site-issues">' + issues + '</ul>' +
+              '<p class="sq-caption" style="margin-top:var(--space-5)">Hit something not on this ' +
+                'list? That is exactly what the button below is for.</p>' +
+            '</div>' +
+          '</div>' +
+        '</section>'
+      : '') +
 
-    ctaPanel(app.stage, 'Support', 'Something off in ' + app.name + '?',
-             "Tell us and we'll look today. It goes to the people who maintain it.",
-             'Reach out', app.id);
+    (isLive(app)
+      ? ctaPanel('Support', 'Something off in ' + app.name + '?',
+                 "Tell us and we'll look today. It goes to the people who maintain it.",
+                 'Reach out', app.id)
+      : ctaPanel('Coming soon', app.name + ' is still being built.',
+                 'It is not released yet. Ask us anything about it, or tell us what it ' +
+                 'needs to do — we are still deciding some of it.',
+                 'Get in touch', app.id));
   }
 
   function viewTeam() {
-    var people = TEAM.map(function (p, i) {
-      return '<div class="sq-card site-person" data-reveal style="--i:' + i + '">' +
-        '<span class="site-person__avatar" aria-hidden="true">' + esc(p.initials) + '</span>' +
-        '<h3 class="sq-h3 site-person__name">Placeholder name</h3>' +
-        '<p class="sq-mono site-person__role">' + esc(p.role) + '</p>' +
-        '<p class="sq-body-sm site-person__note">' + esc(p.note) + '</p>' +
-        '<p class="sq-mono site-person__tz">' + esc(p.tz) + '</p>' +
+    /* Deliberately no names, faces or headcount-by-person. The crew is small
+       and stays anonymous until there is a reason not to be. */
+    var makeup = MAKEUP.map(function (m, i) {
+      return '<div class="sq-card sq-card--edge site-feature" data-reveal style="--i:' + i + '">' +
+        '<span class="sq-mono">0' + (i + 1) + '</span>' +
+        '<h3 class="sq-h3 site-feature__title">' + esc(m.title) + '</h3>' +
+        '<p class="sq-body site-feature__body">' + esc(m.body) + '</p>' +
       '</div>';
     }).join('');
 
@@ -515,19 +534,18 @@
       '<div class="sq-slash sq-slash--beam" style="--slash-x:72%" aria-hidden="true"></div>' +
       '<div class="site-container">' +
         '<p class="sq-eyebrow">The crew</p>' +
-        '<h1 class="sq-hero">Six time zones,<br>one group chat,<br>no office plant.</h1>' +
-        '<p class="sq-lead site-hero__lead">sideQUESTdigital started in 2025 as a side project that ' +
+        '<h1 class="sq-hero">A small team,<br>one group chat,<br>no office plant.</h1>' +
+        '<p class="sq-lead site-hero__lead">sideQUESTdigital is a small team of developers, marketers ' +
+          'and business people building apps together. It started in 2025 as a side project that ' +
           'refused to stay one. We are remote by default — the apps get built wherever the wifi holds.</p>' +
       '</div>' +
     '</section>' +
 
     '<section class="site-section" style="padding-top:0">' +
       '<div class="site-container">' +
-        '<div class="site-people">' + people + '</div>' +
-        '<div class="site-placeholder">' +
-          '<span class="sq-pill sq-pill--muted">Placeholder</span>' +
-          "<span class=\"sq-caption\">Photos and bios land when the crew's happy with them.</span>" +
-        '</div>' +
+        sechead('The make-up', 'Three sides, one team.', '03 sides',
+                'No org chart, no named founders page. The work is the introduction.') +
+        '<div class="site-features">' + makeup + '</div>' +
       '</div>' +
     '</section>' +
 
@@ -538,7 +556,7 @@
       '</div>' +
     '</div>' +
 
-    ctaPanel('play', 'Say hello', 'Want to talk to us?',
+    ctaPanel('Say hello', 'Want to talk to us?',
              'Bug, idea, or just a thought. One short form, a human at the other end.',
              'Say hello');
   }
@@ -564,12 +582,12 @@
   }
 
   function render(route) {
-    var html, title, stage;
+    var html, title;
 
-    if (route.name === 'apps')      { html = viewApps();  title = 'Apps';  stage = 'play'; }
-    else if (route.name === 'app')  { html = viewApp(route.app); title = route.app.name; stage = route.app.stage; }
-    else if (route.name === 'team') { html = viewTeam();  title = 'Team';  stage = 'play'; }
-    else                            { html = viewStudio(); title = 'Studio'; stage = 'play'; }
+    if (route.name === 'apps')      { html = viewApps();  title = 'Apps'; }
+    else if (route.name === 'app')  { html = viewApp(route.app); title = route.app.name; }
+    else if (route.name === 'team') { html = viewTeam();  title = 'Team'; }
+    else                            { html = viewStudio(); title = 'Studio'; }
 
     view.innerHTML = html;
     document.title = title + ' — sideQUESTdigital';
@@ -578,10 +596,9 @@
     APPS.forEach(function (a) { root.classList.remove(a.theme); });
     if (route.name === 'app' && route.app.theme) root.classList.add(route.app.theme);
 
-    railLocked = (route.name === 'app');
-    setStage(stage);
-    if (railLocked) lockRail(route.app.stage);
-    else unlockRail();
+    /* The rail always tracks scroll now — it describes how the studio works,
+       not the status of whatever app you happen to be looking at. */
+    setStage('play');
 
     $$('.site-nav__link').forEach(function (l) {
       var match = (l.getAttribute('href') === '#/' && route.name === 'home') ||
@@ -625,25 +642,9 @@
 
   var railSeg   = $('[data-rail-seg]');
   var railWords = $$('.site-rail__word');
-  var railEl    = $('.site-rail');
   var progress  = $('[data-progress]');
-  var railLocked = false;
-  var BANDS = ['play', 'build', 'launch'];
-
-  function lockRail(stage) {
-    railEl.classList.add('is-locked');
-    railWords.forEach(function (w) {
-      w.classList.toggle('is-active', w.dataset.railWord === stage);
-    });
-    var idx = BANDS.indexOf(stage);
-    railSeg.style.top = [18, 50, 82][idx] + '%';
-    if (progress) progress.style.width = '100%';
-  }
-
-  function unlockRail() { railEl.classList.remove('is-locked'); }
 
   function updateRail() {
-    if (railLocked) return;
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     var band = p < 0.34 ? 'play' : (p < 0.67 ? 'build' : 'launch');
@@ -789,11 +790,11 @@
     lastFocused = document.activeElement;
     supportOpen = true;
 
-    // Scope the panel to the app's stage when opened from an app context.
-    panel.classList.remove('sq-stage-play', 'sq-stage-build', 'sq-stage-launch');
+    // Tint the panel to the app's own colour when opened from an app context.
+    APPS.forEach(function (x) { panel.classList.remove(x.theme); });
     if (opts.app) {
       var a = appById(opts.app);
-      if (a) { panel.classList.add(STAGES[a.stage].cls); appEl.value = a.id; }
+      if (a) { if (a.theme) panel.classList.add(a.theme); appEl.value = a.id; }
     }
     if (opts.kind) selectKind(opts.kind);
 
@@ -928,13 +929,73 @@
       ? 'Sending…'
       : '<span class="site-spinner" aria-hidden="true"></span>Sending…';
 
-    setTimeout(finishSubmit, 700);
+    var ref = 'SQ-' + Math.floor(Math.random() * 0xffffff).toString(16).toUpperCase().padStart(6, '0');
+    send(buildPayload(ref)).then(function () {
+      finishSubmit(ref);
+    })['catch'](function (err) {
+      failSubmit(err);
+    });
   });
 
-  function finishSubmit() {
+  /* --- webhook --- */
+
+  function buildPayload(ref) {
+    var opt = appEl.options[appEl.selectedIndex];
+    return {
+      ref: ref,
+      kind: kind,
+      app: appEl.value,
+      appLabel: opt ? opt.text : appEl.value,
+      email: emailEl.value.trim(),
+      message: msgEl.value.trim(),
+      diagnostics: $('#support-diag').checked,
+      submittedAt: new Date().toISOString(),
+      source: 'sidequest-site',
+      page: location.href,
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      viewport: window.innerWidth + 'x' + window.innerHeight
+    };
+  }
+
+  /* A normal CORS POST, so the status code is readable and a failed send is
+     reported as a failure. This requires "Allowed Origins (CORS)" to be set on
+     the n8n Webhook node — without it the browser blocks the response and the
+     user is told the message did not send.
+
+     There is deliberately no `mode: 'no-cors'` fallback: an opaque response
+     cannot be inspected, so a 404 from an unarmed webhook would render as a
+     success screen and the message would be silently lost. */
+  function send(payload) {
+    return fetch(SUPPORT_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      if (!res.ok) throw new Error('Webhook responded ' + res.status);
+      return res;
+    });
+  }
+
+  function resetSubmitBtn() {
+    submitBtn.classList.remove('is-loading');
+    submitBtn.removeAttribute('aria-busy');
+    submitBtn.removeAttribute('aria-disabled');
+    submitBtn.style.minWidth = '';
+    submitBtn.textContent = 'Send it';
+  }
+
+  function failSubmit(err) {
+    resetSubmitBtn();
+    summary.hidden = false;
+    summary.innerHTML = '<p>That did not send. Try again in a moment.</p>' +
+      '<ul><li>' + esc(err && err.message ? err.message : String(err)) + '</li></ul>';
+    announce('Message failed to send.');
+  }
+
+  function finishSubmit(ref) {
     var opt = appEl.options[appEl.selectedIndex];
     var label = appEl.value === 'general' ? 'the studio' : opt.text;
-    var ref = 'SQ-' + Math.floor(Math.random() * 0xffffff).toString(16).toUpperCase().padStart(6, '0');
 
     $('[data-done-body]', done).textContent =
       'We have logged this against ' + label + '. You will hear from one of us at ' +
@@ -954,11 +1015,7 @@
     showError(emailEl, null); showError(msgEl, null);
     countEl.textContent = '0 / 1000'; countEl.style.color = '';
     summary.hidden = true;
-    submitBtn.classList.remove('is-loading');
-    submitBtn.removeAttribute('aria-busy');
-    submitBtn.removeAttribute('aria-disabled');
-    submitBtn.style.minWidth = '';
-    submitBtn.textContent = 'Send it';
+    resetSubmitBtn();
     done.hidden = true;
     form.hidden = false;
     emailEl.focus();

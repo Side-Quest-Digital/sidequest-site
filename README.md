@@ -44,32 +44,50 @@ The mark was recovered from the brand icon tile and lives at
 Each app page adopts its own brand colour by overriding only the accent tokens,
 so every accent-aware component re-tints in one move:
 
-| App | Stage | Accent | Source |
-|---|---|---|---|
-| PlantSwap | Launch | `#52B788` | sampled from the real app icon |
-| Vibe Check | Build | `#FF4DA6` | its `COLORS.primary` |
-| Backtrack | Play | `#E554A9` | the Reverse Audio brand kit |
+| App | Accent | Source |
+|---|---|---|
+| PlantSwap | `#52B788` | sampled from the real app icon |
+| Vibe Check | `#FF4DA6` | its `COLORS.primary` |
+| Backtrack | `#E554A9` | the Reverse Audio brand kit |
 
-Stage pills keep the **stage** colour (violet / lime / cyan) even inside an app
-world, so the Play → Build → Launch coding is never lost. Every accent clears
-4.5:1 on the night canvas and takes ink on its own fill.
+Every accent clears 4.5:1 on the night canvas and takes ink on its own fill.
 
 ## The signature move — the Stage Rail
 
-The brand's spine is **Play → Build → Launch**. The site is built on it:
+The brand's spine is **Play → Build → Launch**. It describes **how the studio
+works**, not the status of any individual app:
 
 - A fixed 72px rail (≥1360px) carries the tagline vertically with a travelling
   accent segment. Below 1360px it becomes a 2px progress hairline under the header.
-- Scrolling Studio / Apps / Team band-switches `<html>` between
+- Scrolling any page band-switches `<html>` between
   `.sq-stage-play|build|launch`, so `--accent` — and with it the field bloom,
   buttons, links, pills and focus ring — travels violet → lime → cyan as you read.
-- On an app detail view the rail **locks** to that app's stage. Plantswap is
-  permanently, obviously BUILD.
 - Route changes throw a 135° slash of light across the viewport — the same angle
   as the sword in the mark.
 
-Accent colour is therefore never decorative. Every splash of lime or cyan means
-"this thing is at this stage".
+**Apps are never labelled with a stage.** An app is either `live` or `soon`
+(`status` in the `APPS` array) and says so in plain words — *Live* or *Coming
+soon*. The rail used to lock to a per-app stage; that idea is gone, because
+"this app is at BUILD" told a visitor nothing useful.
+
+## Release status
+
+| App | `status` | Shows |
+|---|---|---|
+| PlantSwap | `live` | Live pill, version, channel, store buttons, release notes, known issues |
+| Vibe Check | `soon` | Coming soon pill, blurb, screens, features. No version, no store links, no changelog |
+| Backtrack | `soon` | as above |
+
+Release notes and known issues only render for a `live` app — a changelog for
+something that has never shipped is noise. Flipping an app to live is a one-word
+data change plus re-adding its `version`, `channel`, `build`, `changes` and
+`issues` fields.
+
+## The team page is deliberately anonymous
+
+No names, no faces, no headcount-by-person. The page describes the make-up of
+the team — developers, marketers, business side — and nothing else. Do not add
+named crew cards back without being asked.
 
 ## Routes
 
@@ -119,10 +137,12 @@ README, brief and brand guide.
 
 - **Vibe Check screens.** The only app without real captures. Run the Expo
   prototype and grab five.
-- **Team.** Names are "Placeholder name"; photos are initials avatars.
-- **Store links.** App Store / Google Play buttons are deliberately inert and
-  labelled "Store links go live with the listing" — no URLs exist yet.
-- **Contact.** The support form has no backend; it resolves to a local success
-  state. No email address is published anywhere on the site, on purpose.
-- **Release notes and known issues.** Illustrative, not real changelogs, though
-  they track each project's actual history closely.
+- **Store links.** PlantSwap's App Store / Google Play buttons are deliberately
+  inert and labelled "Store links go live with the listing" — no URLs exist yet.
+  The two coming-soon apps show no store buttons at all.
+- **Contact.** Done — the support form POSTs to the live n8n production webhook
+  and is verified end to end from a real browser. See [CLAUDE.md](CLAUDE.md) for
+  the payload shape. No email address is published anywhere on the site, on
+  purpose.
+- **Release notes and known issues.** PlantSwap only, and illustrative rather
+  than a real changelog, though they track the project's actual history closely.
