@@ -96,7 +96,7 @@ named crew cards back without being asked.
 | `#/` | Studio |
 | `#/apps` | Apps index |
 | `#/apps/plantswap`, `#/apps/vibecheck`, `#/apps/backtrack` | App detail |
-| `#/team` | Team |
+| `#/team` | Team — **unpublished**, redirects to Studio (see `SHOW_TEAM` in `site.js`) |
 
 ## Local development
 

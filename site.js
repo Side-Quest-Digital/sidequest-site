@@ -7,6 +7,11 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  /* The Team page is built and working but deliberately not published — its
+     nav and footer links are pulled and #/team redirects to the studio page.
+     Flip this to true to put it back live; nothing else needs changing. */
+  var SHOW_TEAM = false;
+
   /* Support form destination. n8n production webhook — the workflow is active,
      so this accepts requests continuously and answers the CORS preflight.
      The `/webhook-test/` variant of the same id only works while n8n is
@@ -577,7 +582,9 @@
       }
       return { name: 'apps' };
     }
-    if (parts[0] === 'team') return { name: 'team' };
+    /* While unpublished, an old #/team link falls back to the studio page
+       rather than 404-ing into nothing. */
+    if (parts[0] === 'team') return SHOW_TEAM ? { name: 'team' } : { name: 'home', unknown: true };
     return { name: 'home', unknown: true };
   }
 
@@ -1044,6 +1051,16 @@
   });
 
   /* ---------------------------------------------------------------- boot -- */
+
+  /* The Team links are static markup in index.html, so unpublishing the page
+     means pulling them here. Removed rather than hidden — a hidden link is
+     still in the tab order and still read out. */
+  if (!SHOW_TEAM) {
+    $$('a[href="#/team"]').forEach(function (l) {
+      var li = l.closest('li');
+      (li || l).remove();
+    });
+  }
 
   var ticking = false;
   window.addEventListener('scroll', function () {

@@ -37,6 +37,11 @@ Remote: [`Side-Quest-Digital/sidequest-site`](https://github.com/Side-Quest-Digi
 2. **The team page is anonymous.** No names, no photos, no per-person cards —
    it describes the mix (developers, marketers, business side). Do not
    reintroduce named crew cards without being asked.
+3. **The team page is currently unpublished.** `SHOW_TEAM = false` at the top of
+   [site.js](site.js) pulls its nav and footer links out of the DOM at boot and
+   redirects `#/team` to the studio page. The view itself (`viewTeam()`), its
+   copy and its CSS are all intact — flipping the flag to `true` puts it back,
+   no other change needed. Do not delete the view while the flag exists.
 
 ## Support form → n8n
 
