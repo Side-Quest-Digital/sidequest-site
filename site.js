@@ -41,9 +41,9 @@
       blurb: 'Point the camera at any dish (restaurant plate, takeaway, home-cooked) and every non-vegan ingredient gets swapped for the best plant-based alternative, with the reasoning shown.',
       platforms: 'iOS \u00b7 Android', version: '1.0', build: 'Store assets ready',
       legal: [
-        { label: 'Privacy Policy', href: 'legal/plantswap-privacy.html' },
-        { label: 'EULA', href: 'legal/plantswap-eula.html' },
-        { label: 'Support', href: 'legal/plantswap-support.html' }
+        { label: 'Privacy Policy', href: 'plant-swap/privacy-policy/' },
+        { label: 'EULA', href: 'plant-swap/eula/' },
+        { label: 'Support', href: 'plant-swap/support/' }
       ],
       shots: [
         { src: 'screen-1.png', caption: 'Make any meal plant-based' },
