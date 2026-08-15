@@ -1293,7 +1293,7 @@ body.is-locked { overflow: hidden; }
 .site-footer__giant { display: flex; align-items: center; justify-content: center; }
 .site-footer__giantq {
   width: 1.11em; height: 1.11em;
-  margin: 0 -0.09em 0 -0.01em;
+  margin: 0 -0.16em 0 -0.01em;
   transform: translateY(-0.01em);
   opacity: 0.55;
 }
