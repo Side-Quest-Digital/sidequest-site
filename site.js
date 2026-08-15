@@ -82,8 +82,8 @@
       ]
     },
     {
-      id: 'backtrack', name: 'Reverse Audio', status: 'soon', theme: 'app-backtrack', eta: 'October 2026',
-      icon: 'assets/apps/backtrack/icon.png',
+      id: 'reverse-audio', name: 'Reverse Audio', status: 'soon', theme: 'app-reverse-audio', eta: 'October 2026',
+      icon: 'assets/apps/reverse-audio/icon.png',
       tagline: 'Record. Reverse. Try to sing it backwards.',
       blurb: 'Reverse audio without the toll booth. Record your voice and hear it backwards instantly, no ads, then play the scored reverse-singing challenge and share the result.',
       platforms: 'iOS \u00b7 Android',
@@ -101,6 +101,13 @@
       ]
     }
   ];
+
+  /* App ids that have been renamed. An old #/apps/<id> link still lands on the
+     right app rather than bouncing to the apps index. Keep entries here even
+     after the name is forgotten, they cost nothing and old links live forever. */
+  var LEGACY_APP_IDS = {
+    backtrack: 'reverse-audio'
+  };
 
   /* PlantSwap is the only app on a store. Everything else says so, plainly. */
   var RELEASE = {
@@ -619,7 +626,7 @@
     if (!parts.length) return { name: 'home' };
     if (parts[0] === 'apps') {
       if (parts[1]) {
-        var a = appById(parts[1]);
+        var a = appById(LEGACY_APP_IDS[parts[1]] || parts[1]);
         return a ? { name: 'app', app: a } : { name: 'apps' };
       }
       return { name: 'apps' };

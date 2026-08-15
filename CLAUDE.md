@@ -99,7 +99,7 @@ values deliberately (a button reads "Request a feature"; the value stays
 | `general` | `Not app-specific / the studio` |
 | `plantswap` | `PlantSwap` |
 | `vibecheck` | `Vibe Check` |
-| `backtrack` | `Backtrack` |
+| `reverse-audio` | `Reverse Audio` |
 
 `general` is the default when the form is opened from the header, hero or
 footer. Opening from an app page pre-selects that app. **Adding an app to

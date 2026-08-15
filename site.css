@@ -1324,7 +1324,7 @@ body.is-locked { overflow: hidden; }
   --app-deep:    #13122B;
   --app-soft:    #7B61FF;
 }
-.app-backtrack {
+.app-reverse-audio {
   --accent:      #E554A9;
   --accent-hi:   #F06FBA;
   --accent-text: #E554A9;

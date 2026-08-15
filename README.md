@@ -95,7 +95,7 @@ named crew cards back without being asked.
 |---|---|
 | `#/` | Studio |
 | `#/apps` | Apps index |
-| `#/apps/plantswap`, `#/apps/vibecheck`, `#/apps/backtrack` | App detail |
+| `#/apps/plantswap`, `#/apps/vibecheck`, `#/apps/reverse-audio` | App detail |
 | `#/team` | Team, **unpublished**, redirects to Studio (see `SHOW_TEAM` in `site.js`) |
 
 ## Local development
@@ -128,7 +128,7 @@ All three apps are the real workspace projects, not invented ones:
 |---|---|---|
 | PlantSwap | `Plant Swap/Assets/Apple/App Icon (1024x1024)/` | 5 real app captures from `Assets/Apple/Actual app/` |
 | Vibe Check | `Vibe Check/assets/icon-vibecheck.png` | **none yet**, themed placeholder frames |
-| Reverse Audio | `reverse/reverse-audio-brand-assets/app-icon-512.png` | 5 frames rendered from `reverse/design/mockups/backtrack-mockups-v1.html` |
+| Reverse Audio | `reverse/reverse-audio-brand-assets/app-icon-512.png` | 5 frames rendered from `reverse/design/mockups/reverse-audio-mockups-v1.html` |
 
 Names, taglines, blurbs and feature copy are taken from each project's own
 README, brief and brand guide.
