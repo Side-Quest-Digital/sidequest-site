@@ -1,5 +1,5 @@
 /* ============================================================================
-   sideQUESTdigital — site
+   sideQUESTdigital, site
    Vanilla JS, no build step. Implements design/design-spec.md.
    ============================================================================ */
 (function () {
@@ -7,12 +7,12 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* The Team page is built and working but deliberately not published — its
+  /* The Team page is built and working but deliberately not published, its
      nav and footer links are pulled and #/team redirects to the studio page.
      Flip this to true to put it back live; nothing else needs changing. */
   var SHOW_TEAM = false;
 
-  /* Support form destination. n8n production webhook — the workflow is active,
+  /* Support form destination. n8n production webhook, the workflow is active,
      so this accepts requests continuously and answers the CORS preflight.
      The `/webhook-test/` variant of the same id only works while n8n is
      listening after "Execute workflow", and only for a single call. */
@@ -24,7 +24,7 @@
 
   /* ---------------------------------------------------------------- data -- */
 
-  /* Play / Build / Launch is how the studio works — it drives the rail, the
+  /* Play / Build / Launch is how the studio works, it drives the rail, the
      scroll bands and the accent. It is deliberately NOT a per-app status:
      an app is either live or it isn't. See `status` on each app below. */
   var STAGES = {
@@ -38,8 +38,13 @@
       id: 'plantswap', name: 'PlantSwap', status: 'live', theme: 'app-plantswap',
       icon: 'assets/apps/plantswap/icon.png',
       tagline: 'Snap any meal. Get a vegan version, instantly.',
-      blurb: 'Point the camera at any dish \u2014 restaurant plate, takeaway, home-cooked \u2014 and every non-vegan ingredient gets swapped for the best plant-based alternative, with the reasoning shown.',
-      platforms: 'iOS \u00b7 Android', version: '1.0', channel: 'TestFlight', build: 'Store assets ready',
+      blurb: 'Point the camera at any dish (restaurant plate, takeaway, home-cooked) and every non-vegan ingredient gets swapped for the best plant-based alternative, with the reasoning shown.',
+      platforms: 'iOS \u00b7 Android', version: '1.0', build: 'Store assets ready',
+      legal: [
+        { label: 'Privacy Policy', href: 'legal/plantswap-privacy.html' },
+        { label: 'EULA', href: 'legal/plantswap-eula.html' },
+        { label: 'Support', href: 'legal/plantswap-support.html' }
+      ],
       shots: [
         { src: 'screen-1.png', caption: 'Make any meal plant-based' },
         { src: 'screen-2.png', caption: 'Snap it, swap it' },
@@ -53,14 +58,11 @@
         { title: 'Your library, not ours', body: 'Save what works. Recipes and vegan places near you, kept on your own shelf.' }
       ],
       changes: [
-        { ver: '1.0', date: '2026-07-18', head: 'First TestFlight build', note: 'Camera capture, ingredient swapping and the saved-recipe shelf, end to end.' },
+        { ver: '1.0', date: '2026-07-18', head: 'First build', note: 'Camera capture, ingredient swapping and the saved-recipe shelf, end to end.' },
         { ver: '0.9', date: '2026-07-02', head: 'Vegan spots near you', note: 'A map of nearby vegan and vegan-friendly places, powered by OpenStreetMap.' },
         { ver: '0.8', date: '2026-06-11', head: 'Faster processing', note: 'Photos compress on device before they are sent, which roughly halved the wait.' }
       ],
-      issues: [
-        { title: 'Busy plates confuse the swap list', text: 'Dishes with more than about eight ingredients sometimes miss one.', status: 'investigating' },
-        { title: 'Map needs a location prompt retry', text: 'Denying location once hides the map until the app is restarted.', status: 'review' }
-      ]
+      issues: []
     },
     {
       id: 'vibecheck', name: 'Vibe Check', status: 'soon', theme: 'app-vibecheck',
@@ -80,10 +82,10 @@
       ]
     },
     {
-      id: 'backtrack', name: 'Backtrack', status: 'soon', theme: 'app-backtrack',
+      id: 'backtrack', name: 'Reverse Audio', status: 'soon', theme: 'app-backtrack', eta: 'October 2026',
       icon: 'assets/apps/backtrack/icon.png',
       tagline: 'Record. Reverse. Try to sing it backwards.',
-      blurb: 'Reverse audio without the toll booth. Record your voice and hear it backwards instantly \u2014 no ads, no daily limit \u2014 then play the scored reverse-singing challenge and share the result.',
+      blurb: 'Reverse audio without the toll booth. Record your voice and hear it backwards instantly, no ads, then play the scored reverse-singing challenge and share the result.',
       platforms: 'iOS \u00b7 Android',
       shots: [
         { src: 'screen-1.png', caption: 'Hold to record' },
@@ -93,7 +95,7 @@
         { src: 'screen-5.png', caption: 'Made for the feed' }
       ],
       features: [
-        { title: 'No ads, no gates', body: 'Unlimited reverses, free. That is the whole pitch, and it is what the incumbent charges weekly for.' },
+        { title: 'No ads, ever', body: 'No ads, and the core stays free. That is the whole pitch, and it is what the incumbent charges weekly for.' },
         { title: 'The singing challenge', body: 'Learn the backwards line, record your attempt, get scored on how close you got.' },
         { title: 'Made for the feed', body: 'A portrait share card with your score on it, ready to post without editing.' }
       ]
@@ -170,7 +172,7 @@
 
   /* ------------------------------------------------------------ partials -- */
 
-  /* The studio mark, tiled — used where no app is involved. */
+  /* The studio mark, tiled, used where no app is involved. */
   function tile(size, cls) {
     return '<span class="sq-icontile sq-icontile--night ' + (cls || '') + '">' +
              '<img class="sq-icontile__mark" src="' + MARK + '" alt="">' +
@@ -197,7 +199,7 @@
   }
 
   /* One form, three doors. Naming the kinds on the button is the only way a
-     visitor learns they can do more than report a bug — each one opens the
+     visitor learns they can do more than report a bug, each one opens the
      same slide-over with that kind pre-picked. A bug report against an app
      that has never shipped makes no sense, so live apps get that door only. */
   function supportActions(app) {
@@ -219,7 +221,7 @@
     '</div>';
   }
 
-  /* No stage class — the panel takes whichever accent the scroll band is on. */
+  /* No stage class, the panel takes whichever accent the scroll band is on. */
   function ctaPanel(eyebrow, head, sub, label, appId) {
     return '<section class="site-section" data-reveal>' +
       '<div class="site-container">' +
@@ -341,7 +343,7 @@
       '</div>' +
     '</div>' +
 
-    ctaPanel('Feedback', 'Bug, question or idea — tell us.',
+    ctaPanel('Feedback', 'Bug, question or idea: tell us.',
              'No ticket portal, no bot. It goes straight to the people who wrote the code.',
              'Send feedback');
   }
@@ -359,7 +361,7 @@
           '<span class="sq-h3">' + esc(a.name) + '</span>' +
           '<span class="sq-body-sm site-appcard__blurb">' + esc(a.blurb) + '</span>' +
           '<span class="sq-mono site-appcard__meta">' + esc(a.platforms) +
-            (isLive(a) ? ' · v' + esc(a.version) + ' · ' + esc(a.channel) : ' · In development') +
+            (isLive(a) ? ' · v' + esc(a.version) : ' · In development') +
           '</span>' +
           '<span class="site-appcard__more">Learn more ' +
             '<span class="site-appcard__arrow" aria-hidden="true">↗</span></span>' +
@@ -398,12 +400,12 @@
       var inner = real
         ? '<div class="sq-screen__inner">' +
             '<img class="site-shot__img" src="assets/apps/' + app.id + '/' + s.src + '"' +
-                 ' alt="' + esc(app.name) + ' — ' + esc(s.caption) + '" loading="lazy">' +
+                 ' alt="' + esc(app.name) + ': ' + esc(s.caption) + '" loading="lazy">' +
           '</div>'
         : '<div class="sq-screen__notch" aria-hidden="true"></div>' +
           '<div class="sq-screen__inner site-shot__inner" role="img"' +
                ' aria-label="Placeholder screen ' + (i + 1) + ' of ' + app.shots.length +
-               ' — ' + esc(app.name) + '">' +
+               ', ' + esc(app.name) + '">' +
             '<span class="site-shot__initial" aria-hidden="true">' + esc(app.name.charAt(0)) + '</span>' +
             '<span class="sq-mono site-shot__tag">Screen 0' + (i + 1) + '</span>' +
             '<span class="sq-mono site-shot__ph">Placeholder</span>' +
@@ -472,9 +474,9 @@
             '<div class="site-detailhero__pills">' +
               '<span class="sq-pill sq-pill--muted">' + esc(app.platforms) + '</span>' +
               (isLive(app)
-                ? '<span class="sq-pill sq-pill--muted">' + esc(app.channel) + '</span>' +
-                  '<span class="sq-pill sq-pill--muted">' + esc(app.build) + '</span>'
-                : '<span class="sq-pill sq-pill--muted">In development</span>') +
+                ? '<span class="sq-pill sq-pill--muted">' + esc(app.build) + '</span>'
+                : '<span class="sq-pill sq-pill--muted">In development</span>' +
+                  (app.eta ? '<span class="sq-pill sq-pill--muted">Est. ' + esc(app.eta) + '</span>' : '')) +
             '</div>' +
             (isLive(app)
               ? '<div class="site-detailhero__actions">' +
@@ -485,7 +487,9 @@
             '<p class="sq-caption site-detailhero__storenote">' +
               (isLive(app)
                 ? 'Store links go live with the listing.'
-                : "Not released yet. We'll announce it here when it is.") +
+                : (app.eta
+                    ? 'Estimated release: ' + esc(app.eta) + '. Store links go live with the listing.'
+                    : "Not released yet. We'll announce it here when it is.")) +
             '</p>' +
             supportActions(app) +
           '</div>' +
@@ -527,6 +531,21 @@
         '</section>'
       : '') +
 
+    /* Legal / support links, for apps heading to the app stores. */
+    (app.legal
+      ? '<section class="site-section" style="padding-top:0">' +
+          '<div class="site-container">' +
+            '<p class="sq-mono site-legal__title">Legal &amp; support</p>' +
+            '<div class="site-legal">' +
+              app.legal.map(function (l) {
+                return '<a class="site-legal__link" href="' + l.href + '">' +
+                  esc(l.label) + '<span aria-hidden="true"> ↗</span></a>';
+              }).join('') +
+            '</div>' +
+          '</div>' +
+        '</section>'
+      : '') +
+
     (isLive(app)
       ? ctaPanel('Feedback', 'Something to say about ' + app.name + '?',
                  "A bug, a question, or something it should do. We'll look today, " +
@@ -534,7 +553,7 @@
                  'Send feedback', app.id)
       : ctaPanel('Coming soon', app.name + ' is still being built.',
                  'It is not released yet. Ask us anything about it, or tell us what it ' +
-                 'needs to do — we are still deciding some of it.',
+                 'needs to do, we are still deciding some of it.',
                  'Send feedback', app.id));
   }
 
@@ -565,7 +584,7 @@
         '<h1 class="sq-hero">A small team,<br>one group chat,<br>no office plant.</h1>' +
         '<p class="sq-lead site-hero__lead">sideQUESTdigital is a small team of developers, marketers ' +
           'and business people building apps together. It started in 2025 as a side project that ' +
-          'refused to stay one. We are remote by default — the apps get built wherever the wifi holds.</p>' +
+          'refused to stay one. We are remote by default, the apps get built wherever the wifi holds.</p>' +
       '</div>' +
     '</section>' +
 
@@ -620,13 +639,13 @@
     else                            { html = viewStudio(); title = 'Studio'; }
 
     view.innerHTML = html;
-    document.title = title + ' — sideQUESTdigital';
+    document.title = title + ' · sideQUESTdigital';
 
     var root = document.documentElement;
     APPS.forEach(function (a) { root.classList.remove(a.theme); });
     if (route.name === 'app' && route.app.theme) root.classList.add(route.app.theme);
 
-    /* The rail always tracks scroll now — it describes how the studio works,
+    /* The rail always tracks scroll now, it describes how the studio works,
        not the status of whatever app you happen to be looking at. */
     setStage('play');
 
@@ -645,7 +664,7 @@
 
     var h1 = $('h1', view);
     if (h1) { h1.setAttribute('tabindex', '-1'); h1.focus({ preventScroll: true }); }
-    announce(title + ' — sideQUESTdigital');
+    announce(title + ' · sideQUESTdigital');
   }
 
   function navigate() {
@@ -787,7 +806,7 @@
   var lastFocused = null;
   /* Nothing is pre-selected. Most entry points into this form now pass an
      explicit kind, and the generic ones ("Send feedback") genuinely do not
-     know yet — defaulting those to "Bug report" would mislabel the report. */
+     know yet, defaulting those to "Bug report" would mislabel the report. */
   var kind = null;
   var touched = {};
 
@@ -810,7 +829,7 @@
     kindsBox.appendChild(b);
   });
 
-  /* Pass null to clear the selection — the roving tabindex falls back to the
+  /* Pass null to clear the selection, the roving tabindex falls back to the
      first option so the group stays reachable by keyboard. */
   function selectKind(k) {
     kind = k || null;
@@ -1011,7 +1030,7 @@
 
   /* A normal CORS POST, so the status code is readable and a failed send is
      reported as a failure. This requires "Allowed Origins (CORS)" to be set on
-     the n8n Webhook node — without it the browser blocks the response and the
+     the n8n Webhook node, without it the browser blocks the response and the
      user is told the message did not send.
 
      There is deliberately no `mode: 'no-cors'` fallback: an opaque response
@@ -1097,7 +1116,7 @@
   /* ---------------------------------------------------------------- boot -- */
 
   /* The Team links are static markup in index.html, so unpublishing the page
-     means pulling them here. Removed rather than hidden — a hidden link is
+     means pulling them here. Removed rather than hidden, a hidden link is
      still in the tab order and still read out. */
   if (!SHOW_TEAM) {
     $$('a[href="#/team"]').forEach(function (l) {

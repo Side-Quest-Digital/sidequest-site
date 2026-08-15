@@ -1,5 +1,5 @@
 /* ============================================================================
-   sideQUESTdigital — site layer
+   sideQUESTdigital, site layer
    Built on the canonical brand system in
    _ds/sidequest-brand-445e24cf-0e8e-4c99-9475-6c33b087ac6f/
 
@@ -28,7 +28,7 @@
   --z-panel:  90;
   --z-wipe:   100;
 
-  /* ---- Accent tints — derived, never a literal hex ---- */
+  /* ---- Accent tints, derived, never a literal hex ---- */
   --tint-accent-06: color-mix(in srgb, var(--accent) 6%,  transparent);
   --tint-accent-08: color-mix(in srgb, var(--accent) 8%,  transparent);
   --tint-accent-14: color-mix(in srgb, var(--accent) 14%, transparent);
@@ -115,7 +115,7 @@ body.is-locked { overflow: hidden; }
 .site-skip:focus { top: var(--space-4); color: var(--accent-on); }
 
 /* ============================================================
-   THE STAGE RAIL (§6.1) — the signature move
+   THE STAGE RAIL (§6.1), the signature move
    ============================================================ */
 
 .site-rail {
@@ -166,7 +166,7 @@ body.is-locked { overflow: hidden; }
   color: var(--accent-text);
   text-shadow: 0 0 24px var(--accent-glow);
 }
-/* The rail no longer locks to an app — app pages had a per-app stage, and
+/* The rail no longer locks to an app, app pages had a per-app stage, and
    that idea is gone. It tracks scroll on every route. */
 
 /* Sub-xl fallback: a progress hairline under the header. */
@@ -288,7 +288,7 @@ body.is-locked { overflow: hidden; }
 }
 
 /* ============================================================
-   SECTION HEADER (§6.21) — the site's section signature
+   SECTION HEADER (§6.21), the site's section signature
    ============================================================ */
 
 .site-sechead { margin-bottom: var(--space-6); }
@@ -401,7 +401,7 @@ body.is-locked { overflow: hidden; }
 @keyframes site-marquee { to { transform: translate3d(-50%, 0, 0); } }
 
 /* ============================================================
-   APP LEDGER ROW (§6.4) — Studio
+   APP LEDGER ROW (§6.4), Studio
    ============================================================ */
 
 .site-approw {
@@ -492,7 +492,7 @@ body.is-locked { overflow: hidden; }
 }
 
 /* ============================================================
-   APP CARD (§6.5) + FORGE TILE (§6.6) — Apps index
+   APP CARD (§6.5) + FORGE TILE (§6.6), Apps index
    ============================================================ */
 
 .site-appgrid {
@@ -618,7 +618,7 @@ body.is-locked { overflow: hidden; }
 @media (max-width: 767px) { .site-detailhero__actions .sq-btn { width: 100%; } }
 .site-detailhero__storenote { margin-top: var(--space-3); }
 
-/* The feedback doors are a separate group from the store buttons — getting the
+/* The feedback doors are a separate group from the store buttons, getting the
    app and telling us about it are different jobs. */
 .site-detailhero__feedback {
   margin-top: var(--space-6);
@@ -628,7 +628,7 @@ body.is-locked { overflow: hidden; }
 .site-detailhero__feedbacklabel { color: var(--text-tertiary); }
 .site-detailhero__feedback .site-detailhero__actions { margin-top: var(--space-3); }
 
-/* Store buttons have no destination yet — they are honestly inert. */
+/* Store buttons have no destination yet, they are honestly inert. */
 .sq-btn[aria-disabled="true"] {
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
@@ -766,7 +766,7 @@ body.is-locked { overflow: hidden; }
 .site-issue:last-child { border-bottom: 0; }
 .site-issue__text { margin: var(--space-2) 0 0; }
 
-/* Status pills — DATA colours only, never the accent (§5.4) */
+/* Status pills, DATA colours only, never the accent (§5.4) */
 .site-status { border-color: currentColor; background: transparent; white-space: nowrap; }
 .site-status--open          { color: var(--sq-bad); }
 .site-status--investigating { color: var(--sq-warn); }
@@ -838,7 +838,7 @@ body.is-locked { overflow: hidden; }
 .site-triad__step--build  { color: var(--sq-lime-400); }
 .site-triad__step--launch { color: var(--sq-cyan-400); }
 
-/* Two 135° hairline dividers — the documented multi-slash exception (§5.6) */
+/* Two 135° hairline dividers, the documented multi-slash exception (§5.6) */
 .site-triad__slash {
   position: absolute;
   top: -30%; bottom: -30%;
@@ -897,7 +897,7 @@ body.is-locked { overflow: hidden; }
 
 /* ============================================================
    TEAM (§6.16, §6.17)
-   The people grid was removed with the named-crew cards — the team page
+   The people grid was removed with the named-crew cards, the team page
    describes the mix of skills, not individuals, and reuses .site-features.
    ============================================================ */
 
@@ -1218,7 +1218,7 @@ body.is-locked { overflow: hidden; }
 [data-reveal].is-in { opacity: 1; transform: none; }
 
 /* Route change moves focus to the new <h1> for screen readers. That focus is
-   programmatic, so the ring is noise — suppress it there only (§7.6). */
+   programmatic, so the ring is noise, suppress it there only (§7.6). */
 #main h1:focus, #main h1:focus-visible { outline: none; }
 
 .site-announce {
@@ -1229,7 +1229,7 @@ body.is-locked { overflow: hidden; }
 
 /* ============================================================
    REDUCED MOTION / TRANSPARENCY (§7, §8.4)
-   effects.css zeroes durations but not transforms — override explicitly.
+   effects.css zeroes durations but not transforms, override explicitly.
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1263,7 +1263,7 @@ body.is-locked { overflow: hidden; }
 }
 
 /* ============================================================================
-   THE LOGO — the wordmark with the real Q-and-sword built into it.
+   THE LOGO, the wordmark with the real Q-and-sword built into it.
    "sideQUEST" is never plain text: the Q is always the mark.
    ============================================================================ */
 
@@ -1281,9 +1281,9 @@ body.is-locked { overflow: hidden; }
 /* The mark's artwork is wider than its bowl (the blade overhangs bottom-right),
    so it is oversized against the cap height and tucked back in with margins. */
 .sq-logo__q {
-  width: 1.34em; height: 1.34em;
-  margin: 0 -0.1em 0 -0.06em;
-  transform: translateY(0.055em);
+  width: 1.2em; height: 1.2em;
+  margin: 0 -0.08em 0 -0.05em;
+  transform: translateY(-0.03em);
   flex: 0 0 auto;
 }
 
@@ -1292,14 +1292,14 @@ body.is-locked { overflow: hidden; }
 
 .site-footer__giant { display: flex; align-items: center; justify-content: center; }
 .site-footer__giantq {
-  width: 0.92em; height: 0.92em;
-  margin: 0 -0.06em;
-  transform: translateY(0.02em);
+  width: 1.11em; height: 1.11em;
+  margin: 0 -0.09em 0 -0.01em;
+  transform: translateY(-0.01em);
   opacity: 0.55;
 }
 
 /* ============================================================================
-   APP WORLDS — each app page adopts its own brand colour.
+   APP WORLDS, each app page adopts its own brand colour.
    Only the accent tokens are overridden, so every accent-aware component
    re-tints in one move and the site's structure stays identical.
    Values are sampled from each app's real icon; every accent clears 4.5:1 on
@@ -1334,7 +1334,7 @@ body.is-locked { overflow: hidden; }
   --app-soft:    #F1EAFC;
 }
 
-/* App icon — the real artwork, squircle-masked, full bleed. */
+/* App icon, the real artwork, squircle-masked, full bleed. */
 .site-appicon {
   display: block;
   width: var(--tile-size, 96px);
@@ -1360,3 +1360,31 @@ body.is-locked { overflow: hidden; }
 /* Real screenshots sit edge-to-edge inside the device frame. */
 .site-shot__img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sq-screen__inner:has(.site-shot__img) { background: #000; }
+
+/* ============================================================
+   LEGAL & SUPPORT LINKS (app detail, store-bound apps)
+   ============================================================ */
+.site-legal__title {
+  font-size: var(--text-mono, 12px);
+  color: var(--sq-text-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-4);
+}
+.site-legal { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.site-legal__link {
+  display: inline-flex; align-items: center; gap: 2px;
+  padding: 10px 16px;
+  border: 1px solid var(--sq-border);
+  border-radius: var(--radius-pill, 999px);
+  background: var(--sq-panel);
+  color: var(--sq-text-200);
+  font-size: 14px; font-weight: 600;
+  transition: border-color var(--dur-base, .2s) var(--ease, ease),
+              background var(--dur-base, .2s) var(--ease, ease);
+}
+.site-legal__link:hover {
+  border-color: var(--sq-violet-500);
+  background: var(--sq-panel-hi);
+  color: var(--sq-text-100);
+}
